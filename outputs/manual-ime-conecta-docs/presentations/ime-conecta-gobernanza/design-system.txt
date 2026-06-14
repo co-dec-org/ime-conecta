@@ -1,0 +1,7 @@
+slide size: 1280x720
+background: dark institutional field with subtle grid/rules
+typography: Aptos Display for claims, Aptos for labels/body
+palette: #080808, #2e2d32, #15e9cd, #1370ef, #6755d1, #83f0e2, #fff8af
+layout families: cover, index map, bullet proof, matrix, flow, timeline, decision list, close
+container grammar: rectangular panels with restrained line weight; no decorative pseudo-logos
+footer: section number and short source label

@@ -1,0 +1,14 @@
+01 cover / thesis
+02 index map
+03-05 diagnosis proof slides
+06 response matrix
+07 concept divider
+08 platform blocks
+09 web-video use case
+10 funding opportunity
+11 comparison proof
+12 governance flow
+13-16 operating tables/matrices
+17 roadmap
+18-19 deliberation and agreements
+20 close

@@ -1,0 +1,6 @@
+task mode: create
+primary deck-profile: strategy-leadership (base route; auxiliary profile file unavailable in installed package)
+audience: Directorio de IME Chile
+required proof objects: problem grid, response matrix, operating model flow, web-video use case, roadmap, decision questions
+brand constraints: no fabricated official logo; use institutional typography, IME text mark only, palette from the web app
+QA gates: editable PPTX, 20 slides, render previews, no overflow, no repeated slide rhythm for long runs

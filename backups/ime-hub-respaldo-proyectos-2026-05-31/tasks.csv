@@ -1,3 +1,0 @@
-id,project_id,title,description,responsible_id,due_date,status,priority,backing_url,observations,created_at,updated_at
-00b38035-a66b-4c2c-8cad-cdf9c4471df3,,Test,Test de mensaje,7d72d9da-813b-468d-a91b-7959c2ae7e88,2026-06-01,En curso,Baja,https://www.sercotec.cl/wp-content/uploads/2026/05/Bases-FG-2026_Metropolitana.pdf,Test observaciones,2026-05-30T20:05:47.654324+00:00,2026-05-30T20:05:47.654324+00:00
-14c77830-0a22-41ab-b550-a501971e1662,5b802752-d6f6-41fe-812f-5d11805d6179,Revisar postulación,,fdd3268a-662c-4ad8-9df6-3b155517deae,2026-06-04,Pendiente,Media,,,2026-05-30T19:58:19.40132+00:00,2026-05-30T19:58:19.40132+00:00

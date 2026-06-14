@@ -1,0 +1,1433 @@
+{
+  "schema": "openai.presentation.layout/v4",
+  "unit": "px",
+  "slide": {
+    "aid": "sl/81el05",
+    "id": "81el05",
+    "slide": 4,
+    "layoutId": "0d7e7acb-0a96-4502-855b-c8ff998dc2d6",
+    "layoutName": "Title Slide",
+    "layoutType": "title",
+    "masterLayoutId": "8897f033-15c5-41e4-9eb7-7166ca2bf01f",
+    "masterLayoutName": "Master",
+    "frame": {
+      "left": 0,
+      "top": 0,
+      "width": 1280,
+      "height": 720
+    }
+  },
+  "theme": {
+    "colorSchemeName": "ChatGPT",
+    "colors": {
+      "accent1": "#156082",
+      "accent2": "#E97132",
+      "accent3": "#196B24",
+      "accent4": "#0F9ED5",
+      "accent5": "#A02B93",
+      "accent6": "#4EA72E",
+      "bg1": "#FFFFFF",
+      "bg2": "#000000",
+      "tx1": "#1F1F1F",
+      "tx2": "#FFFFFF",
+      "dk1": "#000000",
+      "lt1": "#FFFFFF",
+      "dk2": "#0E2841",
+      "lt2": "#E8E8E8",
+      "hlink": "#467886",
+      "folHlink": "#96607D"
+    },
+    "typefaces": [
+      "Aptos",
+      "Aptos Display"
+    ]
+  },
+  "inheritedLayers": [
+    {
+      "scope": "layout",
+      "id": "0d7e7acb-0a96-4502-855b-c8ff998dc2d6",
+      "name": "Title Slide",
+      "type": "title",
+      "parentLayoutId": "8897f033-15c5-41e4-9eb7-7166ca2bf01f",
+      "elements": []
+    },
+    {
+      "scope": "master",
+      "id": "8897f033-15c5-41e4-9eb7-7166ca2bf01f",
+      "name": "Master",
+      "type": "master",
+      "elements": []
+    }
+  ],
+  "elements": [
+    {
+      "order": 1,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/t83itgfm",
+      "id": "1",
+      "bbox": [
+        0,
+        0,
+        1280,
+        720
+      ],
+      "geometry": "rect",
+      "fillColor": "#080808",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 2,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/mhk3q5o7",
+      "id": "2",
+      "bbox": [
+        0,
+        0,
+        1,
+        720
+      ],
+      "geometry": "rect",
+      "fillColor": "#102832",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 3,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/b2hwfyxo",
+      "id": "3",
+      "bbox": [
+        80,
+        0,
+        1,
+        720
+      ],
+      "geometry": "rect",
+      "fillColor": "#102832",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 4,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/4byhgn29",
+      "id": "4",
+      "bbox": [
+        160,
+        0,
+        1,
+        720
+      ],
+      "geometry": "rect",
+      "fillColor": "#102832",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 5,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/twra5gbq",
+      "id": "5",
+      "bbox": [
+        240,
+        0,
+        1,
+        720
+      ],
+      "geometry": "rect",
+      "fillColor": "#102832",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 6,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/m58z25kb",
+      "id": "6",
+      "bbox": [
+        320,
+        0,
+        1,
+        720
+      ],
+      "geometry": "rect",
+      "fillColor": "#102832",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 7,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/bq1oryts",
+      "id": "7",
+      "bbox": [
+        400,
+        0,
+        1,
+        720
+      ],
+      "geometry": "rect",
+      "fillColor": "#102832",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 8,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/47y1kre1",
+      "id": "8",
+      "bbox": [
+        480,
+        0,
+        1,
+        720
+      ],
+      "geometry": "rect",
+      "fillColor": "#102832",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 9,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/tsvu9kni",
+      "id": "9",
+      "bbox": [
+        560,
+        0,
+        1,
+        720
+      ],
+      "geometry": "rect",
+      "fillColor": "#102832",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 10,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/90je9cvi",
+      "id": "10",
+      "bbox": [
+        640,
+        0,
+        1,
+        720
+      ],
+      "geometry": "rect",
+      "fillColor": "#102832",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 11,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/gfmlkjm1",
+      "id": "11",
+      "bbox": [
+        720,
+        0,
+        1,
+        720
+      ],
+      "geometry": "rect",
+      "fillColor": "#102832",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 12,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/rytsvu9k",
+      "id": "12",
+      "bbox": [
+        800,
+        0,
+        1,
+        720
+      ],
+      "geometry": "rect",
+      "fillColor": "#102832",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 13,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/yd0z6103",
+      "id": "13",
+      "bbox": [
+        880,
+        0,
+        1,
+        720
+      ],
+      "geometry": "rect",
+      "fillColor": "#102832",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 14,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/9s36hcrm",
+      "id": "14",
+      "bbox": [
+        960,
+        0,
+        1,
+        720
+      ],
+      "geometry": "rect",
+      "fillColor": "#102832",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 15,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/g7adsji5",
+      "id": "15",
+      "bbox": [
+        1040,
+        0,
+        1,
+        720
+      ],
+      "geometry": "rect",
+      "fillColor": "#102832",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 16,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/rmhk3q5o",
+      "id": "16",
+      "bbox": [
+        1120,
+        0,
+        1,
+        720
+      ],
+      "geometry": "rect",
+      "fillColor": "#102832",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 17,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/y1kre1w7",
+      "id": "17",
+      "bbox": [
+        1200,
+        0,
+        1,
+        720
+      ],
+      "geometry": "rect",
+      "fillColor": "#102832",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 18,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/5o7qpg3e",
+      "id": "18",
+      "bbox": [
+        0,
+        0,
+        1280,
+        1
+      ],
+      "geometry": "rect",
+      "fillColor": "#102832",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 19,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/g3ex0nux",
+      "id": "19",
+      "bbox": [
+        0,
+        72,
+        1280,
+        1
+      ],
+      "geometry": "rect",
+      "fillColor": "#102832",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 20,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/cfa9w3m9",
+      "id": "20",
+      "bbox": [
+        0,
+        144,
+        1280,
+        1
+      ],
+      "geometry": "rect",
+      "fillColor": "#102832",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 21,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/1032lszq",
+      "id": "21",
+      "bbox": [
+        0,
+        216,
+        1280,
+        1
+      ],
+      "geometry": "rect",
+      "fillColor": "#102832",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 22,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/u9knih4b",
+      "id": "22",
+      "bbox": [
+        0,
+        288,
+        1280,
+        1
+      ],
+      "geometry": "rect",
+      "fillColor": "#102832",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 23,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/judg7ads",
+      "id": "23",
+      "bbox": [
+        0,
+        360,
+        1280,
+        1
+      ],
+      "geometry": "rect",
+      "fillColor": "#102832",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 24,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/c7u54zid",
+      "id": "24",
+      "bbox": [
+        0,
+        432,
+        1280,
+        1
+      ],
+      "geometry": "rect",
+      "fillColor": "#102832",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 25,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/1orytsvu",
+      "id": "25",
+      "bbox": [
+        0,
+        504,
+        1280,
+        1
+      ],
+      "geometry": "rect",
+      "fillColor": "#102832",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 26,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/u18jqh0f",
+      "id": "26",
+      "bbox": [
+        0,
+        576,
+        1280,
+        1
+      ],
+      "geometry": "rect",
+      "fillColor": "#102832",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 27,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/jm1cfa9w",
+      "id": "27",
+      "bbox": [
+        0,
+        648,
+        1280,
+        1
+      ],
+      "geometry": "rect",
+      "fillColor": "#102832",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 28,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/cvixczed",
+      "id": "28",
+      "bbox": [
+        0,
+        0,
+        14,
+        720
+      ],
+      "geometry": "rect",
+      "fillColor": "#15E9CD",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 29,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/5gbq1ory",
+      "id": "29",
+      "name": "kicker-marker",
+      "bbox": [
+        48,
+        38,
+        11,
+        11
+      ],
+      "geometry": "rect",
+      "fillColor": "#15E9CD",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 30,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/val87ed8",
+      "id": "30",
+      "name": "kicker-label",
+      "bbox": [
+        68,
+        28,
+        420,
+        30
+      ],
+      "geometry": "rect",
+      "text": "04 · MIRADA MACRO",
+      "textPreview": "04 · MIRADA MACRO",
+      "resolvedFontSize": 13,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 13,
+        "typeface": "Aptos",
+        "color": "#15E9CD",
+        "bold": true,
+        "alignment": "left",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "04 · MIRADA MACRO"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "04 · MIRADA MACRO",
+          "resolvedTextStyle": {
+            "fontSize": 13,
+            "typeface": "Aptos",
+            "color": "#15E9CD",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "04 · MIRADA MACRO",
+              "fontSize": 13,
+              "typeface": "Aptos",
+              "color": "#15E9CD",
+              "bold": true
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "rgba(0, 0, 0, 0)",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 31,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/6psfil0r",
+      "id": "31",
+      "bbox": [
+        48,
+        72,
+        1040,
+        112
+      ],
+      "geometry": "rect",
+      "text": "La musica electronica chilena ya opera como ecosistema productivo y cultural.",
+      "textPreview": "La musica electronica chilena ya opera como ecosistema productivo y cultural.",
+      "resolvedFontSize": 38,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 38,
+        "typeface": "Aptos Display",
+        "color": "#EFF1F5",
+        "bold": true,
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 2,
+        "lines": [
+          {
+            "index": 1,
+            "text": "La musica electronica chilena ya opera como ecosistema"
+          },
+          {
+            "index": 2,
+            "text": "productivo y cultural."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "La musica electronica chilena ya opera como ecosistema productivo y cultural.",
+          "resolvedTextStyle": {
+            "fontSize": 38,
+            "typeface": "Aptos Display",
+            "color": "#EFF1F5",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "La musica electronica chilena ya opera como ecosistema productivo y cultural.",
+              "fontSize": 38,
+              "typeface": "Aptos Display",
+              "color": "#EFF1F5",
+              "bold": true
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "rgba(0, 0, 0, 0)",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 32,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/dcbulwva",
+      "id": "32",
+      "bbox": [
+        54,
+        210,
+        540,
+        180
+      ],
+      "geometry": "rect",
+      "fillColor": "#101920",
+      "lineColor": "#285A68",
+      "lineWidth": 1
+    },
+    {
+      "order": 33,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/kre1w7mp",
+      "id": "33",
+      "bbox": [
+        76,
+        226,
+        496,
+        148
+      ],
+      "geometry": "rect",
+      "text": "La musica electronica chilena ya no puede entenderse solo como escena o comunidad informal. Tambien requiere representacion gremial, datos, institucionalidad, redes, planificacion y capacidad de gestion.",
+      "textPreview": "La musica electronica chilena ya no puede entenderse solo como escena o comunidad informal. Tambien requiere representacion gremial, dato...",
+      "resolvedFontSize": 19,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 19,
+        "typeface": "Aptos",
+        "color": "#B3C8EE",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 4,
+        "lines": [
+          {
+            "index": 1,
+            "text": "La musica electronica chilena ya no puede entenderse"
+          },
+          {
+            "index": 2,
+            "text": "solo como escena o comunidad informal. Tambien"
+          },
+          {
+            "index": 3,
+            "text": "requiere representacion gremial, datos, institucionalidad,"
+          },
+          {
+            "index": 4,
+            "text": "redes, planificacion y capacidad de gestion."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "La musica electronica chilena ya no puede entenderse solo como escena o comunidad informal. Tambien requiere representacion gremial, datos, institucionalidad, redes, planificacion y capacidad de gestion.",
+          "resolvedTextStyle": {
+            "fontSize": 19,
+            "typeface": "Aptos",
+            "color": "#B3C8EE",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "La musica electronica chilena ya no puede entenderse solo como escena o comunidad informal. Tambien requiere representacion gremial, datos, institucionalidad, redes, planificacion y capacidad de gestion.",
+              "fontSize": 19,
+              "typeface": "Aptos",
+              "color": "#B3C8EE"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "rgba(0, 0, 0, 0)",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 34,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/vixczed8",
+      "id": "34",
+      "bbox": [
+        650,
+        208,
+        10,
+        10
+      ],
+      "geometry": "rect",
+      "fillColor": "#15E9CD",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 35,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/2x4nap4r",
+      "id": "35",
+      "bbox": [
+        676,
+        200,
+        504,
+        44
+      ],
+      "geometry": "rect",
+      "text": "Ecosistema artistico.",
+      "textPreview": "Ecosistema artistico.",
+      "resolvedFontSize": 19,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 19,
+        "typeface": "Aptos",
+        "color": "#EFF1F5",
+        "alignment": "left",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Ecosistema artistico."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Ecosistema artistico.",
+          "resolvedTextStyle": {
+            "fontSize": 19,
+            "typeface": "Aptos",
+            "color": "#EFF1F5",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Ecosistema artistico.",
+              "fontSize": 19,
+              "typeface": "Aptos",
+              "color": "#EFF1F5"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "rgba(0, 0, 0, 0)",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 36,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/donyd0z6",
+      "id": "36",
+      "bbox": [
+        650,
+        258,
+        10,
+        10
+      ],
+      "geometry": "rect",
+      "fillColor": "#1370EF",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 37,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/k3q5o7qp",
+      "id": "37",
+      "bbox": [
+        676,
+        250,
+        504,
+        44
+      ],
+      "geometry": "rect",
+      "text": "Ecosistema tecnico.",
+      "textPreview": "Ecosistema tecnico.",
+      "resolvedFontSize": 19,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 19,
+        "typeface": "Aptos",
+        "color": "#EFF1F5",
+        "alignment": "left",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Ecosistema tecnico."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Ecosistema tecnico.",
+          "resolvedTextStyle": {
+            "fontSize": 19,
+            "typeface": "Aptos",
+            "color": "#EFF1F5",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Ecosistema tecnico.",
+              "fontSize": 19,
+              "typeface": "Aptos",
+              "color": "#EFF1F5"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "rgba(0, 0, 0, 0)",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 38,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/vu9knih4",
+      "id": "38",
+      "bbox": [
+        650,
+        308,
+        10,
+        10
+      ],
+      "geometry": "rect",
+      "fillColor": "#15E9CD",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 39,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/29gr2p8n",
+      "id": "39",
+      "bbox": [
+        676,
+        300,
+        504,
+        44
+      ],
+      "geometry": "rect",
+      "text": "Ecosistema productivo.",
+      "textPreview": "Ecosistema productivo.",
+      "resolvedFontSize": 19,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 19,
+        "typeface": "Aptos",
+        "color": "#EFF1F5",
+        "alignment": "left",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Ecosistema productivo."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Ecosistema productivo.",
+          "resolvedTextStyle": {
+            "fontSize": 19,
+            "typeface": "Aptos",
+            "color": "#EFF1F5",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Ecosistema productivo.",
+              "fontSize": 19,
+              "typeface": "Aptos",
+              "color": "#EFF1F5"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "rgba(0, 0, 0, 0)",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 40,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/i5sneloj",
+      "id": "40",
+      "bbox": [
+        650,
+        358,
+        10,
+        10
+      ],
+      "geometry": "rect",
+      "fillColor": "#1370EF",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 41,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/7qpg3ex0",
+      "id": "41",
+      "bbox": [
+        676,
+        350,
+        504,
+        44
+      ],
+      "geometry": "rect",
+      "text": "Ecosistema territorial.",
+      "textPreview": "Ecosistema territorial.",
+      "resolvedFontSize": 19,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 19,
+        "typeface": "Aptos",
+        "color": "#EFF1F5",
+        "alignment": "left",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Ecosistema territorial."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Ecosistema territorial.",
+          "resolvedTextStyle": {
+            "fontSize": 19,
+            "typeface": "Aptos",
+            "color": "#EFF1F5",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Ecosistema territorial.",
+              "fontSize": 19,
+              "typeface": "Aptos",
+              "color": "#EFF1F5"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "rgba(0, 0, 0, 0)",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 42,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/0bi9s36h",
+      "id": "42",
+      "bbox": [
+        650,
+        408,
+        10,
+        10
+      ],
+      "geometry": "rect",
+      "fillColor": "#15E9CD",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 43,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/pwb2hwfy",
+      "id": "43",
+      "bbox": [
+        676,
+        400,
+        504,
+        44
+      ],
+      "geometry": "rect",
+      "text": "Ecosistema digital.",
+      "textPreview": "Ecosistema digital.",
+      "resolvedFontSize": 19,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 19,
+        "typeface": "Aptos",
+        "color": "#EFF1F5",
+        "alignment": "left",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Ecosistema digital."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Ecosistema digital.",
+          "resolvedTextStyle": {
+            "fontSize": 19,
+            "typeface": "Aptos",
+            "color": "#EFF1F5",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Ecosistema digital.",
+              "fontSize": 19,
+              "typeface": "Aptos",
+              "color": "#EFF1F5"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "rgba(0, 0, 0, 0)",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 44,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/ed8v6psf",
+      "id": "44",
+      "bbox": [
+        650,
+        458,
+        10,
+        10
+      ],
+      "geometry": "rect",
+      "fillColor": "#1370EF",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 45,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/7y1kre1w",
+      "id": "45",
+      "bbox": [
+        676,
+        450,
+        504,
+        44
+      ],
+      "geometry": "rect",
+      "text": "Ecosistema de datos y memoria cultural.",
+      "textPreview": "Ecosistema de datos y memoria cultural.",
+      "resolvedFontSize": 19,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 19,
+        "typeface": "Aptos",
+        "color": "#EFF1F5",
+        "alignment": "left",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Ecosistema de datos y memoria cultural."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Ecosistema de datos y memoria cultural.",
+          "resolvedTextStyle": {
+            "fontSize": 19,
+            "typeface": "Aptos",
+            "color": "#EFF1F5",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Ecosistema de datos y memoria cultural.",
+              "fontSize": 19,
+              "typeface": "Aptos",
+              "color": "#EFF1F5"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "rgba(0, 0, 0, 0)",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 46,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/wjudg7ad",
+      "id": "46",
+      "bbox": [
+        48,
+        668,
+        1184,
+        1
+      ],
+      "geometry": "rect",
+      "fillColor": "#173844",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 47,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/p4r65wju",
+      "id": "47",
+      "bbox": [
+        48,
+        678,
+        360,
+        22
+      ],
+      "geometry": "rect",
+      "text": "IME Conecta · Gobernanza operacional",
+      "textPreview": "IME Conecta · Gobernanza operacional",
+      "resolvedFontSize": 11,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 11,
+        "typeface": "Aptos",
+        "color": "#B3C8EE",
+        "alignment": "left",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "IME Conecta · Gobernanza operacional"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "IME Conecta · Gobernanza operacional",
+          "resolvedTextStyle": {
+            "fontSize": 11,
+            "typeface": "Aptos",
+            "color": "#B3C8EE",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "IME Conecta · Gobernanza operacional",
+              "fontSize": 11,
+              "typeface": "Aptos",
+              "color": "#B3C8EE"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "rgba(0, 0, 0, 0)",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    },
+    {
+      "order": 48,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/ih4byhgn",
+      "id": "48",
+      "bbox": [
+        1120,
+        678,
+        112,
+        22
+      ],
+      "geometry": "rect",
+      "text": "04 / 20",
+      "textPreview": "04 / 20",
+      "resolvedFontSize": 11,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 11,
+        "typeface": "Aptos",
+        "color": "#B3C8EE",
+        "alignment": "right",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "04 / 20"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "04 / 20",
+          "resolvedTextStyle": {
+            "fontSize": 11,
+            "typeface": "Aptos",
+            "color": "#B3C8EE",
+            "alignment": "right"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "04 / 20",
+              "fontSize": 11,
+              "typeface": "Aptos",
+              "color": "#B3C8EE"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "rgba(0, 0, 0, 0)",
+      "lineColor": "rgba(0, 0, 0, 0)",
+      "lineWidth": 0
+    }
+  ],
+  "composeRuns": []
+}

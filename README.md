@@ -1,127 +1,76 @@
-# IME Hub
+# IME Conecta - Gobernanza operacional
 
-IME Hub permite saber en qué va cada proyecto, quién lo lleva, qué falta y dónde está el respaldo documental.
+Landing page ejecutiva y presentacion web navegable para presentar al Directorio de IME Chile la propuesta **Gobernanza operacional para una nueva escala gremial**.
 
-MVP privado para IME Chile A.G. orientado a proyectos gremiales, tareas, reuniones externas, acuerdos, stakeholders, enlaces Gmail/Drive y bitácora operativa. La app guarda metadata operativa; Gmail y Drive siguen siendo el archivo documental oficial.
+## Descripcion
 
-## Stack
+El sitio presenta IME Conecta como infraestructura interna de gestion gremial para ordenar socios/as, comites, acuerdos, documentos, proyectos, responsables, plazos, activos digitales, datos personales y avances institucionales. Incluye modo lectura, modo presentacion, busqueda, tema claro/oscuro, progreso, fullscreen, copia de resumen ejecutivo y una capa Web-Video + Web-Audio API local.
 
-- Next.js 16, App Router, TypeScript
-- Tailwind CSS
-- Supabase Auth con email/password
-- Supabase Postgres con RLS
-- Vercel
+## Requisitos
 
-## Instalación local
+- Node.js `^20.19.0` o `>=22.12.0`.
+- npm 9 o superior.
+
+## Instalacion
 
 ```bash
 npm install
-cp .env.example .env.local
+```
+
+## Desarrollo local
+
+```bash
 npm run dev
 ```
 
-Completa `.env.local` con las credenciales de Supabase:
+## Build
 
 ```bash
-NEXT_PUBLIC_SUPABASE_URL=
-NEXT_PUBLIC_SUPABASE_ANON_KEY=
-SUPABASE_SERVICE_ROLE_KEY=
-NEXT_PUBLIC_APP_URL=http://localhost:3000
+npm run build
 ```
 
-No subas `.env.local` al repositorio.
+## Preview
 
-## Configuración Supabase
-
-1. Crea un proyecto Supabase.
-2. En SQL Editor ejecuta `supabase/schema.sql`.
-3. Luego ejecuta `supabase/seed.sql`.
-4. En Authentication activa Email/Password.
-5. Desactiva auto-registro público desde el cliente. El MVP usa `/api/auth/password-login`, que revisa `authorized_users` activo por nombre personal antes de iniciar sesión.
-6. Agrega los dominios autorizados:
-   - `http://localhost:3000`
-   - `http://127.0.0.1:3000`
-   - `https://imehub.orionnetwork.cl`
-   - `https://hub.imechile.org`
-
-## Seguridad y permisos
-
-- Login obligatorio.
-- Acceso mediante usuario personal y clave. En este MVP, el usuario personal corresponde al nombre registrado.
-- La clave inicial es el correo registrado del usuario.
-- El usuario puede cambiar su clave en **Mi cuenta**.
-- Reingreso requerido si el usuario pasa 5 días sin actividad.
-- RLS activado en tablas operativas.
-- Vista `public_profiles` expone solo datos básicos para responsables.
-- RUT y teléfono/WhatsApp se gestionan desde `authorized_users` y la UI de accesos es solo Admin.
-- `robots.txt` y `X-Robots-Tag` impiden indexación.
-
-## Claves iniciales
-
-La clave inicial de cada usuario es su correo registrado. Desde **Accesos**, un Admin puede usar **Clave inicial** para restablecer esa clave temporal si alguien queda bloqueado. Cada usuario puede cambiar su clave en **Mi cuenta**.
-
-## Módulos incluidos
-
-- Dashboard general
-- Directorio semanal
-- CRUD de proyectos
-- CRUD de tareas
-- Reuniones externas
-- Acuerdos
-- Stakeholders
-- Enlaces documentales manuales Gmail/Drive/web
-- Accesos y perfiles
-- Bitácora de actividad
-- Exportación CSV de proyectos
+```bash
+npm run preview
+```
 
 ## Despliegue en Vercel
 
-1. Sube el repositorio a GitHub.
-2. Importa el repo en Vercel.
-3. Configura las variables de entorno de producción:
-   - `NEXT_PUBLIC_SUPABASE_URL`
-   - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
-   - `SUPABASE_SERVICE_ROLE_KEY`
-   - `NEXT_PUBLIC_APP_URL=https://imehub.orionnetwork.cl`
-4. Despliega.
-5. En Supabase Authentication agrega `https://imehub.orionnetwork.cl` como URL permitida.
+- Framework: Vite
+- Build command: `npm run build`
+- Output directory: `dist`
 
-## Dominio piloto
+El archivo `vercel.json` define headers de seguridad, politica de permisos para camara y microfono en `self`, y una CSP para sitio estatico sin trackers.
 
-En Vercel, agrega `imehub.orionnetwork.cl` al proyecto. Luego crea el registro DNS indicado por Vercel en la zona DNS de `orionnetwork.cl`.
+## Documentos asociados
 
-## Dominio futuro
+Los enlaces de descarga quedan activos en `/public/docs` con estos archivos:
 
-Cuando corresponda migrar a `hub.imechile.org`:
+- `Informe_IME_Conecta_Gobernanza_Operacional_actualizado.docx`
+- `Informe_IME_Conecta_Gobernanza_Operacional_actualizado.pdf`
+- `IME_Conecta_Gobernanza_Operacional_Directorio.pptx`
 
-1. Agrega `hub.imechile.org` como dominio en Vercel.
-2. Actualiza DNS de `imechile.org` con el registro indicado.
-3. Cambia `NEXT_PUBLIC_APP_URL` a `https://hub.imechile.org`.
-4. Agrega ese dominio en Supabase Authentication URL Configuration.
+## Privacidad audiovisual local
 
-## Uso no técnico
+- La camara no se activa automaticamente.
+- El microfono no se activa automaticamente; solo se solicita desde el boton de analisis local.
+- El audio generativo usa Web Audio API con OscillatorNode, filtros, delay y AnalyserNode dentro del navegador.
+- El analizador de microfono no reproduce, no graba y no envia la senal a ningun servidor.
+- `getUserMedia` solicita solo video para camara y solo audio para analisis de microfono, siempre en acciones separadas.
+- El stream se procesa localmente en el navegador mediante Canvas.
+- Las capturas PNG y grabaciones WebM se descargan localmente.
+- No hay backend, base de datos, analytics, cookies ni envio de datos a terceros.
+- La preferencia de tema se guarda en `localStorage`.
 
-1. Entra al dominio de IME Hub.
-2. Escribe tu usuario personal.
-3. Usa tu correo registrado como clave inicial.
-4. Puedes cambiar la clave en **Mi cuenta**.
-5. Usa Dashboard para ver alertas generales.
-6. Usa Directorio semanal antes de reuniones de directorio.
-7. En Proyectos, abre una ficha y actualiza responsable, próximo paso, fechas críticas y links Gmail/Drive.
-8. En Tareas, marca avances y cierres.
-9. En Enlaces, pega links a Gmail, Drive o documentos externos. No se suben archivos.
+## Checklist antes de presentar al Directorio
 
-## Preparación del piloto
-
-Usa [docs/carga-operativa-inicial.csv](docs/carga-operativa-inicial.csv) para reunir los datos mínimos de los proyectos antes de una carga real. El checklist operativo está en [docs/checklist-piloto.md](docs/checklist-piloto.md) y la guía de publicación está en [docs/publicacion-piloto.md](docs/publicacion-piloto.md).
-
-## Verificación local realizada
-
-```bash
-npm run lint
-npm run typecheck
-npm run build
-npm audit --omit=dev
-```
-
-Resultado: lint OK, typecheck OK, build OK y audit sin vulnerabilidades.
+- Revisar contenido final de cada seccion.
+- Confirmar documentos definitivos en `/public/docs`.
+- Probar `npm run build`.
+- Probar modo presentacion con teclado: flechas y Escape.
+- Probar fullscreen en el navegador objetivo.
+- Probar busqueda con: Sercotec, IME Conecta, datos, Ley 21.719, operativo.
+- Verificar contraste y lectura en desktop, notebook, tablet y movil.
+- Probar camara, captura PNG para avatar/boleta, PiP, grabacion WebM, audio generativo y analizador de microfono en el navegador de presentacion.
+- Confirmar que no se cargan trackers ni servicios externos.

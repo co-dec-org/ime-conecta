@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { Analytics } from "@vercel/analytics/react";
 import ContentSection from "./components/ContentSection";
 import DownloadPanel from "./components/DownloadPanel";
 import Footer from "./components/Footer";
@@ -341,6 +342,7 @@ export default function App() {
         onFullscreen={handleFullscreen}
       />
       <FloatingNotes activeSection={activeSection} />
+      <Analytics />
     </Layout>
   );
 }

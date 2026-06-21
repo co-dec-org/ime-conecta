@@ -1,5 +1,7 @@
 # IME Conecta - Gobernanza operacional
 
+Sitio en produccion: https://ime-conecta.vercel.app
+
 Landing page ejecutiva y presentacion web navegable para presentar al Directorio de IME Chile la propuesta **Gobernanza operacional para una nueva escala gremial**.
 
 ## Descripcion

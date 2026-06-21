@@ -12,3 +12,4 @@ pnpm-debug.log*
 .next
 outputs/
 work/__pycache__/
+work/*.html

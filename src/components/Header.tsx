@@ -28,7 +28,7 @@ export default function Header({
     <header className="site-header">
       <a className="brand-mark" href="#portada" aria-label="Ir a portada">
         <span className="brand-sigil" aria-hidden="true">
-          IME
+          <img src="/logo-ime-mark.png" alt="" className="brand-sigil-logo" />
         </span>
         <span>
           <strong>IME Conecta</strong>

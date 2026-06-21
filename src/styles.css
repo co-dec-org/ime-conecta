@@ -229,6 +229,19 @@ mark {
   font-weight: 800;
 }
 
+.brand-sigil-logo {
+  width: 68%;
+  height: 68%;
+  object-fit: contain;
+  /* el logo es negro: lo aclaramos para el tema oscuro */
+  filter: brightness(0) invert(1);
+}
+
+:root[data-theme="light"] .brand-sigil-logo {
+  /* en tema claro lo dejamos oscuro */
+  filter: brightness(0);
+}
+
 .brand-mark strong,
 .brand-mark small {
   display: block;

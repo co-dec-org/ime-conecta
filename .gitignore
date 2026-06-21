@@ -13,3 +13,7 @@ pnpm-debug.log*
 outputs/
 work/__pycache__/
 work/*.html
+
+# Temporales de sistema / LibreOffice
+*.tmp
+.~lock.*#

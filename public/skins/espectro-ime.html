@@ -38,6 +38,7 @@
     <button class="btn" id="play" aria-label="Reproducir y analizar la sonificación">Reproducir</button>
     <button class="btn" id="stop" aria-label="Detener">Detener</button>
     <button class="btn" id="mic" aria-pressed="false" aria-label="Analizar el micrófono en vivo">Micrófono</button>
+    <button class="btn" id="png" aria-label="Exportar la imagen actual como PNG">Exportar PNG</button>
   </div>
   <div id="readout" style="margin-top:10px;font-size:12px;color:#c9b8f8;min-height:16px">Pulsa Reproducir para sonificar las trazas y ver su espectro.</div>
   <div style="margin-top:6px;font-size:11px;color:rgba(201,184,248,.6);line-height:1.5">Mockup · espectro y forma de onda en tiempo real. La fuente es la sonificación de trazas (datos de ejemplo) o el micrófono. El micrófono requiere permiso del navegador.</div>
@@ -47,10 +48,10 @@
   var root=document.getElementById('espectro');
   var cv=root.querySelector('#viz'), ctx=cv.getContext('2d');
   var readout=root.querySelector('#readout');
-  var playBtn=root.querySelector('#play'), stopBtn=root.querySelector('#stop'), micBtn=root.querySelector('#mic');
+  var playBtn=root.querySelector('#play'), stopBtn=root.querySelector('#stop'), micBtn=root.querySelector('#mic'), pngBtn=root.querySelector('#png');
   var W=0,H=0,dpr=1;
   var actx=null, analyser=null, master=null, freq=null, wave=null;
-  var playing=false, micOn=false, micStream=null, seqTimer=null, raf=null;
+  var playing=false, micOn=false, micStream=null, seqTimer=null, raf=null, DATA=null, current='';
   var PENT=[220,261.63,293.66,329.63,392,440,523.25,587.33,659.25,783.99];
   var ASSETS=['Portada','Punto de partida','Mirada macro','Problema','IME Conecta','Sercotec','IME Link','Gobernanza','Datos','Cierre'];
   function setup(){
@@ -76,10 +77,12 @@
   function startSeq(){
     setup(); if(micOn) stopMic();
     playing=true; var i=0;
+    var labels = (DATA && DATA.length) ? DATA : ASSETS;
     clearInterval(seqTimer);
     seqTimer=setInterval(function(){
       tone(PENT[i%PENT.length],0.55);
-      readout.textContent='♪ '+ASSETS[i%ASSETS.length]+' — '+Math.round(PENT[i%PENT.length])+' Hz';
+      current = labels[i%labels.length];
+      readout.textContent='♪ '+current+' — '+Math.round(PENT[i%PENT.length])+' Hz';
       i++;
     },380);
   }
@@ -117,12 +120,17 @@
     ctx.lineWidth=2; ctx.strokeStyle='rgba(131,240,226,0.9)'; ctx.beginPath();
     for(var j=0;j<wave.length;j++){ var x=j/wave.length*W; var y=(wave[j]/255)*H*0.45 + H*0.06; if(j===0)ctx.moveTo(x,y); else ctx.lineTo(x,y); }
     ctx.stroke();
+    if(current){ ctx.font='600 18px Inter,ui-sans-serif,sans-serif'; ctx.textAlign='left'; ctx.fillStyle='rgba(239,239,244,0.95)'; ctx.fillText(current, 16, 30); }
   }
+  pngBtn.addEventListener('click',function(){ try{ var a=document.createElement('a'); a.href=cv.toDataURL('image/png'); a.download='espectro-ime.png'; a.click(); }catch(e){} });
   playBtn.addEventListener('click',startSeq);
   stopBtn.addEventListener('click',stopAll);
   micBtn.addEventListener('click',toggleMic);
   window.addEventListener('resize',resize);
-  setTimeout(function(){ resize(); requestAnimationFrame(draw); },30);
+  setTimeout(function(){ resize();
+    fetch('./sample-data.json').then(function(rs){return rs.json();}).then(function(j){ DATA=(j.assets||[]).map(function(a){return a.label;}); }).catch(function(){});
+    requestAnimationFrame(draw);
+  },30);
 })();
 </script>
 </body>

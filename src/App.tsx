@@ -48,6 +48,8 @@ const getSectionSearchText = (section: SectionContent) =>
   ]
     .filter(Boolean)
     .join(" ")
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "")
     .toLowerCase();
 
 const prefersReducedMotion = () =>
@@ -77,7 +79,11 @@ export default function App() {
   const [copied, setCopied] = useState(false);
   const [fullscreenMessage, setFullscreenMessage] = useState("");
 
-  const normalizedQuery = query.trim().toLowerCase();
+  const normalizedQuery = query
+    .trim()
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "")
+    .toLowerCase();
   const activeSection = useMemo(
     () => sections.find((section) => section.id === activeId) ?? sections[0],
     [activeId],

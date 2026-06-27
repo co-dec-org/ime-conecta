@@ -40,6 +40,7 @@
     <button class="btn" id="play" aria-label="Audicionar el patrón">Audicionar</button>
     <button class="btn" id="gen" aria-label="Generar un nuevo patrón estelar">Generar patrón</button>
     <button class="btn" id="pad" aria-pressed="false" aria-label="Alternar ambiente sonoro">Ambiente</button>
+    <button class="btn" id="png" aria-label="Exportar la imagen actual como PNG">Exportar PNG</button>
   </div>
   <div id="readout" style="margin-top:10px;font-size:12px;color:#c9b8f8;min-height:16px"></div>
   <div style="margin-top:6px;font-size:11px;color:rgba(201,184,248,.6);line-height:1.5">Mockup · sonificación de trazas de navegación (datos de ejemplo). Cada estrella = una sección (activo digital); tamaño = tiempo; tono = frecuencia.</div>
@@ -49,7 +50,7 @@
   var root=document.getElementById('constelar');
   var cv=root.querySelector('#sky'), ctx=cv.getContext('2d');
   var readout=root.querySelector('#readout');
-  var playBtn=root.querySelector('#play'), genBtn=root.querySelector('#gen'), padBtn=root.querySelector('#pad');
+  var playBtn=root.querySelector('#play'), genBtn=root.querySelector('#gen'), padBtn=root.querySelector('#pad'), pngBtn=root.querySelector('#png');
   var W=0,H=0,dpr=1, stars=[], bg=[], selected=-1, hovered=-1, playing=false, DATA=null;
   var SECTIONS=['Portada','Punto de partida','Mirada macro','Problema detectado','IME Conecta','Sercotec','IME Link 2027','Gobernanza','Datos'];
   var PENT=[220,261.63,293.66,329.63,392,440,523.25,587.33,659.25];
@@ -85,12 +86,12 @@
   }
   function generate(){
     stars=[];
-    var src = DATA || SECTIONS.map(function(s){ return { label:s, val:Math.round(8+Math.random()*88) }; });
+    var src = DATA || SECTIONS.map(function(s){ return { label:s, val:Math.round(8+Math.random()*88), views:Math.round(40+Math.random()*110) }; });
     for(var i=0;i<src.length;i++){
       var fx,fy;
       if(i>=3&&i<=5){ var k=i-3; fx=0.40+k*0.085; fy=0.36+k*0.075; }
       else { fx=0.10+Math.random()*0.80; fy=0.12+Math.random()*0.74; }
-      stars.push({fx:fx,fy:fy,val:src[i].val,label:src[i].label,freq:PENT[i%PENT.length],maria:(i>=3&&i<=5),ph:Math.random()*6.28});
+      stars.push({fx:fx,fy:fy,val:src[i].val,views:(src[i].views!=null?src[i].views:0),label:src[i].label,freq:PENT[i%PENT.length],maria:(i>=3&&i<=5),ph:Math.random()*6.28});
     }
     bg=[]; for(var j=0;j<150;j++){ bg.push({fx:Math.random(),fy:Math.random(),r:Math.random()*1.2+0.3,ph:Math.random()*6.28,sp:0.5+Math.random()*2}); }
     selected=-1;
@@ -123,24 +124,28 @@
       ctx.beginPath(); ctx.arc(px,py,rad,0,6.2832); ctx.fill();
       ctx.shadowBlur=0; ctx.globalAlpha=1;
     }
-    ctx.font='11px Inter,ui-sans-serif,system-ui,sans-serif'; ctx.textAlign='left';
-    for(var m=0;m<3;m++){ var sm=stars[3+m]; ctx.fillStyle='rgba(131,240,226,0.9)'; ctx.fillText(MAR[m], sm.fx*W+9, sm.fy*H-9); }
+    ctx.textAlign='left';
+    ctx.font='10px Inter,ui-sans-serif,system-ui,sans-serif';
+    for(var q=0;q<stars.length;q++){ if(q>=3&&q<=5) continue; var sq=stars[q]; ctx.fillStyle='rgba(214,196,255,0.5)'; ctx.fillText(sq.label, sq.fx*W+8, sq.fy*H-7); }
+    ctx.font='11px Inter,ui-sans-serif,system-ui,sans-serif';
+    for(var m=0;m<3;m++){ var sm=stars[3+m]; ctx.fillStyle='rgba(131,240,226,0.92)'; ctx.fillText(MAR[m], sm.fx*W+9, sm.fy*H-9); }
     var lab=(hovered>=0?hovered:selected);
-    if(lab>=0){ var sl=stars[lab]; ctx.fillStyle='rgba(239,239,244,0.96)'; ctx.fillText(sl.label+' · '+sl.val+'s', sl.fx*W+9, sl.fy*H+15); }
+    if(lab>=0){ var sl=stars[lab]; ctx.fillStyle='rgba(239,239,244,0.98)'; ctx.fillText(sl.label+' · '+sl.val+'s · '+sl.views+' vistas', sl.fx*W+9, sl.fy*H+16); }
     requestAnimationFrame(draw);
   }
   function pos(e){ var r=cv.getBoundingClientRect(); return {x:e.clientX-r.left,y:e.clientY-r.top}; }
   function nearest(p){ var best=-1,bd=20; for(var i=0;i<stars.length;i++){ var d=Math.hypot(stars[i].fx*W-p.x, stars[i].fy*H-p.y); if(d<bd){bd=d;best=i;} } return best; }
   cv.addEventListener('mousemove',function(e){ hovered=nearest(pos(e)); cv.style.cursor=hovered>=0?'pointer':'default'; });
   cv.addEventListener('mouseleave',function(){ hovered=-1; });
-  cv.addEventListener('click',function(e){ var i=nearest(pos(e)); if(i>=0){ selected=i; var s=stars[i]; tone(s.freq,1.1); readout.textContent='★ '+s.label+' — '+s.val+'s · '+Math.round(s.freq)+' Hz'; } });
-  function audicionar(){ audio(); if(playing)return; playing=true; var i=0; (function step(){ if(i>=stars.length){playing=false; readout.textContent='Patrón completo. Pulsa Generar patrón para otro.'; return;} selected=i; var s=stars[i]; tone(s.freq,0.6); readout.textContent='♪ '+s.label+' — '+s.val+'s'; i++; setTimeout(step,360); })(); }
+  cv.addEventListener('click',function(e){ var i=nearest(pos(e)); if(i>=0){ selected=i; var s=stars[i]; tone(s.freq,1.1); readout.textContent='★ '+s.label+' — '+s.val+'s · '+s.views+' vistas · '+Math.round(s.freq)+' Hz'; } });
+  function audicionar(){ audio(); if(playing)return; playing=true; var i=0; (function step(){ if(i>=stars.length){playing=false; readout.textContent='Patrón completo. Pulsa Generar patrón para otro.'; return;} selected=i; var s=stars[i]; tone(s.freq,0.6); readout.textContent='♪ '+s.label+' — '+s.val+'s · '+s.views+' vistas'; i++; setTimeout(step,360); })(); }
   playBtn.addEventListener('click',audicionar);
   genBtn.addEventListener('click',function(){ generate(); });
   padBtn.addEventListener('click',togglePad);
+  pngBtn.addEventListener('click',function(){ try{ var a=document.createElement('a'); a.href=cv.toDataURL('image/png'); a.download='constelar-ime.png'; a.click(); readout.textContent='Imagen exportada (PNG).'; }catch(e){ readout.textContent='No se pudo exportar la imagen.'; } });
   window.addEventListener('resize',resize);
   setTimeout(function(){ resize();
-    fetch('./sample-data.json').then(function(rs){return rs.json();}).then(function(j){ DATA=(j.assets||[]).map(function(a){ return { label:a.label, val:Math.max(1,Math.round((a.dwell_ms_avg||0)/1000)) }; }); generate(); }).catch(function(){ generate(); });
+    fetch('./sample-data.json').then(function(rs){return rs.json();}).then(function(j){ DATA=(j.assets||[]).map(function(a){ return { label:a.label, val:Math.max(1,Math.round((a.dwell_ms_avg||0)/1000)), views:(a.views||0) }; }); generate(); }).catch(function(){ generate(); });
     requestAnimationFrame(draw);
   },30);
 })();

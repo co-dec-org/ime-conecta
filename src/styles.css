@@ -2409,3 +2409,44 @@ body.is-fullscreen .video-layer[data-expanded="true"] {
   color: var(--muted);
   line-height: 1.5;
 }
+
+.private-demo {
+  max-width: 620px;
+  margin: 0 auto;
+  padding: 48px 20px;
+}
+
+.private-demo h1 {
+  font-size: 1.5rem;
+  color: var(--text);
+}
+
+.private-demo-intro {
+  color: var(--muted);
+  line-height: 1.6;
+  margin-bottom: 8px;
+}
+
+.private-demo-actions {
+  margin: 16px 0;
+}
+
+.private-demo-actions button {
+  padding: 9px 16px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  background: rgba(var(--cyan-rgb), 0.14);
+  color: var(--text);
+  font: inherit;
+  cursor: pointer;
+}
+
+.private-demo-actions button:hover {
+  background: rgba(var(--cyan-rgb), 0.26);
+  border-color: var(--violet);
+}
+
+.private-demo-note {
+  font-size: 0.85rem;
+  color: var(--accent-ink);
+}

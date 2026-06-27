@@ -45,6 +45,29 @@ npm run preview
 
 El archivo `vercel.json` define headers de seguridad, politica de permisos para camara y microfono en `self`, y una CSP para sitio estatico sin trackers.
 
+## Arquitectura (dos capas)
+
+- **Capa publica** (operativa): este sitio, de acceso abierto y anonimo.
+- **Capa privada** (en construccion): usuarixs registradxs con captura de trazas de navegacion en Supabase, para analisis en los laboratorios web. Andamiaje en `src/lib/` (`consent.ts`, `traces.ts`) y `src/components/` (`ConsentBanner`, `DataPanel`).
+
+Demo local de la capa privada (sin backend ni datos reales): abrir el sitio con `?demo=privada`.
+
+Preparacion de Supabase: `.env.example` (variables) y `supabase/migrations/` (esquema SQL).
+
+## Pruebas
+
+```bash
+npm test
+```
+
+Cubren la logica de consentimiento y de captura de trazas, incluida la regla central: no se captura ninguna traza sin consentimiento vigente.
+
+## Documentacion del proyecto
+
+- `PROYECTO.md` — mapa del proyecto.
+- `CONVENCIONES.md` — control de proyecto y gestion documental (git vs Drive).
+- `Registro_Trazabilidad_IME_Conecta.md`, `Diseno_Modelo_Datos_Supabase_IME_Conecta.md` y demas `.md` de diseño y legales.
+
 ## Documentos asociados
 
 Los enlaces de descarga quedan activos en `/public/docs` con estos archivos:
@@ -62,7 +85,7 @@ Los enlaces de descarga quedan activos en `/public/docs` con estos archivos:
 - `getUserMedia` solicita solo video para camara y solo audio para analisis de microfono, siempre en acciones separadas.
 - El stream se procesa localmente en el navegador mediante Canvas.
 - Las capturas PNG y grabaciones WebM se descargan localmente.
-- No hay backend, base de datos, analytics, cookies ni envio de datos a terceros.
+- La capa publica no tiene backend ni base de datos propios. La unica analitica es Vercel Web Analytics: anonima y sin cookies.
 - La preferencia de tema se guarda en `localStorage`.
 
 ## Checklist antes de presentar al Directorio

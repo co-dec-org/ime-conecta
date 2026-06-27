@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Analytics } from "@vercel/analytics/react";
+import PrivateLayerDemo from "./components/PrivateLayerDemo";
 import ContentSection from "./components/ContentSection";
 import DownloadPanel from "./components/DownloadPanel";
 import Footer from "./components/Footer";
@@ -309,6 +310,14 @@ export default function App() {
       </aside>
     </>
   );
+
+  const isPrivateDemo =
+    typeof window !== "undefined" &&
+    new URLSearchParams(window.location.search).get("demo") === "privada";
+
+  if (isPrivateDemo) {
+    return <PrivateLayerDemo />;
+  }
 
   return (
     <Layout header={header} rail={rail} footer={<Footer />}>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Constelar · Skin 02 — IME Conecta</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  html,body{margin:0;background:#080808;color:#efeff4;font-family:Inter,ui-sans-serif,system-ui,-apple-system,sans-serif;min-height:100vh}
+  body{display:flex;align-items:center;justify-content:center;padding:24px;
+    background:linear-gradient(120deg,rgba(124,58,237,.22),transparent 28%),linear-gradient(320deg,rgba(192,132,252,.15),transparent 28%),#080808}
+  .panel{width:100%;max-width:860px;background:rgba(36,28,50,.55);border:1px solid rgba(168,85,247,.30);border-radius:14px;padding:16px;box-shadow:0 24px 80px rgba(0,0,0,.42)}
+  .sigil{width:40px;height:40px;display:grid;place-items:center;border:1px solid rgba(192,132,252,.6);border-radius:8px;background:linear-gradient(135deg,rgba(168,85,247,.2),transparent),#241c32;color:#c084fc;font-weight:700;font-size:12px;letter-spacing:.04em}
+  .btn{background:#241c32;color:#efeff4;border:1px solid rgba(192,132,252,.6);border-radius:8px;padding:9px 15px;font-size:13px;font-family:inherit;cursor:pointer}
+  .btn:hover{background:#2e2440;border-color:#c084fc}
+  .btn.on{background:rgba(131,240,226,.14);border-color:rgba(131,240,226,.6);color:#83f0e2}
+  .pill{font-size:11px;color:#83f0e2;border:1px solid rgba(131,240,226,.4);padding:3px 10px;border-radius:999px}
+  .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+</style>
+</head>
+<body>
+<h2 class="sr-only">Constelar skin 02 con el look de IME Conecta: visualizador y sonificador de patrones estelares para datos de navegación.</h2>
+<div class="panel" id="constelar">
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px">
+    <div style="display:flex;align-items:center;gap:12px">
+      <div class="sigil">IME</div>
+      <div>
+        <div style="font-size:18px;letter-spacing:.26em;font-weight:500;color:#efeff4">CONSTELAR</div>
+        <div style="font-size:11px;letter-spacing:.04em;color:#c9b8f8">Skin 02 · IME Conecta · Gobernanza operacional</div>
+      </div>
+    </div>
+    <div class="pill">audio + visual</div>
+  </div>
+  <div style="position:relative;border-radius:8px;overflow:hidden;border:1px solid rgba(168,85,247,.22)">
+    <canvas id="sky" style="display:block;width:100%;height:400px"></canvas>
+  </div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
+    <button class="btn" id="play" aria-label="Audicionar el patrón">Audicionar</button>
+    <button class="btn" id="gen" aria-label="Generar un nuevo patrón estelar">Generar patrón</button>
+    <button class="btn" id="pad" aria-pressed="false" aria-label="Alternar ambiente sonoro">Ambiente</button>
+  </div>
+  <div id="readout" style="margin-top:10px;font-size:12px;color:#c9b8f8;min-height:16px"></div>
+  <div style="margin-top:6px;font-size:11px;color:rgba(201,184,248,.6);line-height:1.5">Mockup · sonificación de trazas de navegación (datos de ejemplo). Cada estrella = una sección (activo digital); tamaño = tiempo; tono = frecuencia.</div>
+</div>
+<script>
+(function(){
+  var root=document.getElementById('constelar');
+  var cv=root.querySelector('#sky'), ctx=cv.getContext('2d');
+  var readout=root.querySelector('#readout');
+  var playBtn=root.querySelector('#play'), genBtn=root.querySelector('#gen'), padBtn=root.querySelector('#pad');
+  var W=0,H=0,dpr=1, stars=[], bg=[], selected=-1, hovered=-1, playing=false;
+  var SECTIONS=['Portada','Punto de partida','Mirada macro','Problema detectado','IME Conecta','Sercotec','IME Link 2027','Gobernanza','Datos'];
+  var PENT=[220,261.63,293.66,329.63,392,440,523.25,587.33,659.25];
+  var MAR=['Mintaka','Alnilam','Alnitak'];
+  var actx=null, master=null, pad=null, padOn=false;
+  function audio(){
+    if(actx){ if(actx.state==='suspended') actx.resume(); return; }
+    actx=new (window.AudioContext||window.webkitAudioContext)();
+    master=actx.createGain(); master.gain.value=0.85;
+    var delay=actx.createDelay(); delay.delayTime.value=0.30;
+    var fb=actx.createGain(); fb.gain.value=0.34;
+    var lp=actx.createBiquadFilter(); lp.type='lowpass'; lp.frequency.value=2600;
+    master.connect(actx.destination);
+    master.connect(delay); delay.connect(fb); fb.connect(delay); delay.connect(lp); lp.connect(actx.destination);
+  }
+  function tone(freq,dur){
+    audio(); var t=actx.currentTime;
+    var o=actx.createOscillator(); o.type='triangle'; o.frequency.value=freq;
+    var g=actx.createGain();
+    g.gain.setValueAtTime(0.0001,t);
+    g.gain.exponentialRampToValueAtTime(0.5,t+0.012);
+    g.gain.exponentialRampToValueAtTime(0.0001,t+dur);
+    o.connect(g); g.connect(master); o.start(t); o.stop(t+dur+0.05);
+  }
+  function togglePad(){
+    audio();
+    if(padOn){ pad.forEach(function(o){try{o.stop()}catch(e){}}); pad=null; padOn=false; padBtn.classList.remove('on'); padBtn.setAttribute('aria-pressed','false'); return; }
+    pad=[]; [110,164.81,220].forEach(function(f,i){
+      var o=actx.createOscillator(); o.type='sine'; o.frequency.value=f;
+      var g=actx.createGain(); g.gain.value=i===0?0.05:0.03; o.connect(g); g.connect(master); o.start(); pad.push(o);
+    });
+    padOn=true; padBtn.classList.add('on'); padBtn.setAttribute('aria-pressed','true');
+  }
+  function generate(){
+    stars=[];
+    for(var i=0;i<SECTIONS.length;i++){
+      var fx,fy;
+      if(i>=3&&i<=5){ var k=i-3; fx=0.40+k*0.085; fy=0.36+k*0.075; }
+      else { fx=0.10+Math.random()*0.80; fy=0.12+Math.random()*0.74; }
+      stars.push({fx:fx,fy:fy,val:Math.round(8+Math.random()*88),label:SECTIONS[i],freq:PENT[i%PENT.length],maria:(i>=3&&i<=5),ph:Math.random()*6.28});
+    }
+    bg=[]; for(var j=0;j<150;j++){ bg.push({fx:Math.random(),fy:Math.random(),r:Math.random()*1.2+0.3,ph:Math.random()*6.28,sp:0.5+Math.random()*2}); }
+    selected=-1;
+    readout.textContent='Toca una estrella para audicionarla, o pulsa Audicionar para recorrer el patrón.';
+  }
+  function resize(){ var r=cv.getBoundingClientRect(); dpr=Math.min(2,window.devicePixelRatio||1); cv.width=Math.max(1,r.width*dpr); cv.height=Math.max(1,r.height*dpr); W=r.width; H=r.height; }
+  function draw(ts){
+    var t=ts/1000;
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    ctx.fillStyle='#080808'; ctx.fillRect(0,0,W,H);
+    var g1=ctx.createRadialGradient(W*0.15,H*0.12,10,W*0.15,H*0.12,Math.max(W,H)*0.75);
+    g1.addColorStop(0,'rgba(124,58,237,0.30)'); g1.addColorStop(1,'rgba(124,58,237,0)');
+    ctx.fillStyle=g1; ctx.fillRect(0,0,W,H);
+    var g2=ctx.createRadialGradient(W*0.86,H*0.94,10,W*0.86,H*0.94,Math.max(W,H)*0.75);
+    g2.addColorStop(0,'rgba(192,132,252,0.22)'); g2.addColorStop(1,'rgba(192,132,252,0)');
+    ctx.fillStyle=g2; ctx.fillRect(0,0,W,H);
+    for(var b=0;b<bg.length;b++){ var s=bg[b]; ctx.globalAlpha=0.22+0.5*(0.5+0.5*Math.sin(t*s.sp+s.ph)); ctx.fillStyle='#e6def8'; ctx.beginPath(); ctx.arc(s.fx*W,s.fy*H,s.r,0,6.2832); ctx.fill(); }
+    ctx.globalAlpha=1;
+    ctx.lineWidth=1; ctx.strokeStyle='rgba(168,85,247,0.32)'; ctx.beginPath();
+    for(var i=0;i<stars.length;i++){ var x=stars[i].fx*W,y=stars[i].fy*H; if(i===0)ctx.moveTo(x,y); else ctx.lineTo(x,y); }
+    ctx.stroke();
+    ctx.lineWidth=1.5; ctx.strokeStyle='rgba(131,240,226,0.55)'; ctx.beginPath();
+    ctx.moveTo(stars[3].fx*W,stars[3].fy*H); ctx.lineTo(stars[4].fx*W,stars[4].fy*H); ctx.lineTo(stars[5].fx*W,stars[5].fy*H); ctx.stroke();
+    for(var n=0;n<stars.length;n++){
+      var st=stars[n], px=st.fx*W, py=st.fy*H;
+      var rad=(st.maria?3.2:2.2)+st.val/22+(n===selected?2:0);
+      var tw=0.7+0.3*Math.sin(t*2+st.ph);
+      ctx.shadowBlur=(n===selected?26:(st.maria?16:11)); ctx.shadowColor=st.maria?'#83f0e2':(n===selected?'#c084fc':'#a855f7');
+      ctx.globalAlpha=tw; ctx.fillStyle=st.maria?'#c8f5ee':(n===selected?'#e3ccff':'#d6c4ff');
+      ctx.beginPath(); ctx.arc(px,py,rad,0,6.2832); ctx.fill();
+      ctx.shadowBlur=0; ctx.globalAlpha=1;
+    }
+    ctx.font='11px Inter,ui-sans-serif,system-ui,sans-serif'; ctx.textAlign='left';
+    for(var m=0;m<3;m++){ var sm=stars[3+m]; ctx.fillStyle='rgba(131,240,226,0.9)'; ctx.fillText(MAR[m], sm.fx*W+9, sm.fy*H-9); }
+    var lab=(hovered>=0?hovered:selected);
+    if(lab>=0){ var sl=stars[lab]; ctx.fillStyle='rgba(239,239,244,0.96)'; ctx.fillText(sl.label+' · '+sl.val+'s', sl.fx*W+9, sl.fy*H+15); }
+    requestAnimationFrame(draw);
+  }
+  function pos(e){ var r=cv.getBoundingClientRect(); return {x:e.clientX-r.left,y:e.clientY-r.top}; }
+  function nearest(p){ var best=-1,bd=20; for(var i=0;i<stars.length;i++){ var d=Math.hypot(stars[i].fx*W-p.x, stars[i].fy*H-p.y); if(d<bd){bd=d;best=i;} } return best; }
+  cv.addEventListener('mousemove',function(e){ hovered=nearest(pos(e)); cv.style.cursor=hovered>=0?'pointer':'default'; });
+  cv.addEventListener('mouseleave',function(){ hovered=-1; });
+  cv.addEventListener('click',function(e){ var i=nearest(pos(e)); if(i>=0){ selected=i; var s=stars[i]; tone(s.freq,1.1); readout.textContent='★ '+s.label+' — '+s.val+'s · '+Math.round(s.freq)+' Hz'; } });
+  function audicionar(){ audio(); if(playing)return; playing=true; var i=0; (function step(){ if(i>=stars.length){playing=false; readout.textContent='Patrón completo. Pulsa Generar patrón para otro.'; return;} selected=i; var s=stars[i]; tone(s.freq,0.6); readout.textContent='♪ '+s.label+' — '+s.val+'s'; i++; setTimeout(step,360); })(); }
+  playBtn.addEventListener('click',audicionar);
+  genBtn.addEventListener('click',function(){ generate(); });
+  padBtn.addEventListener('click',togglePad);
+  window.addEventListener('resize',resize);
+  setTimeout(function(){ resize(); generate(); requestAnimationFrame(draw); },30);
+})();
+</script>
+</body>
+</html>

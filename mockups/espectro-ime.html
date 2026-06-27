@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Espectro · Skin 03 — IME Conecta</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  html,body{margin:0;background:#080808;color:#efeff4;font-family:Inter,ui-sans-serif,system-ui,sans-serif;min-height:100vh}
+  body{display:flex;align-items:center;justify-content:center;padding:24px;background:linear-gradient(120deg,rgba(124,58,237,.22),transparent 28%),linear-gradient(320deg,rgba(192,132,252,.15),transparent 28%),#080808}
+  .panel{width:100%;max-width:860px;background:rgba(36,28,50,.55);border:1px solid rgba(168,85,247,.30);border-radius:14px;padding:16px;box-shadow:0 24px 80px rgba(0,0,0,.42)}
+  .sigil{width:40px;height:40px;display:grid;place-items:center;border:1px solid rgba(192,132,252,.6);border-radius:8px;background:linear-gradient(135deg,rgba(168,85,247,.2),transparent),#241c32;color:#c084fc;font-weight:700;font-size:12px;letter-spacing:.04em}
+  .btn{background:#241c32;color:#efeff4;border:1px solid rgba(192,132,252,.6);border-radius:8px;padding:9px 15px;font-size:13px;font-family:inherit;cursor:pointer}
+  .btn:hover{background:#2e2440;border-color:#c084fc}
+  .btn.on{background:rgba(131,240,226,.14);border-color:rgba(131,240,226,.6);color:#83f0e2}
+  .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+</style>
+</head>
+<body>
+<h2 class="sr-only">Espectro skin 03: analizador de audio en tiempo real con barras de frecuencia y forma de onda, con el look de IME Conecta.</h2>
+<div class="panel" id="espectro">
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px">
+    <div style="display:flex;align-items:center;gap:12px">
+      <div class="sigil">IME</div>
+      <div>
+        <div style="font-size:18px;letter-spacing:.26em;font-weight:500;color:#efeff4">ESPECTRO</div>
+        <div style="font-size:11px;letter-spacing:.04em;color:#c9b8f8">Skin 03 · IME Conecta · WebLabs</div>
+      </div>
+    </div>
+    <div style="font-size:11px;color:#83f0e2;border:1px solid rgba(131,240,226,.4);padding:3px 10px;border-radius:999px">AnalyserNode</div>
+  </div>
+  <div style="position:relative;border-radius:8px;overflow:hidden;border:1px solid rgba(168,85,247,.22)">
+    <canvas id="viz" style="display:block;width:100%;height:380px"></canvas>
+  </div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
+    <button class="btn" id="play" aria-label="Reproducir y analizar la sonificación">Reproducir</button>
+    <button class="btn" id="stop" aria-label="Detener">Detener</button>
+    <button class="btn" id="mic" aria-pressed="false" aria-label="Analizar el micrófono en vivo">Micrófono</button>
+  </div>
+  <div id="readout" style="margin-top:10px;font-size:12px;color:#c9b8f8;min-height:16px">Pulsa Reproducir para sonificar las trazas y ver su espectro.</div>
+  <div style="margin-top:6px;font-size:11px;color:rgba(201,184,248,.6);line-height:1.5">Mockup · espectro y forma de onda en tiempo real. La fuente es la sonificación de trazas (datos de ejemplo) o el micrófono. El micrófono requiere permiso del navegador.</div>
+</div>
+<script>
+(function(){
+  var root=document.getElementById('espectro');
+  var cv=root.querySelector('#viz'), ctx=cv.getContext('2d');
+  var readout=root.querySelector('#readout');
+  var playBtn=root.querySelector('#play'), stopBtn=root.querySelector('#stop'), micBtn=root.querySelector('#mic');
+  var W=0,H=0,dpr=1;
+  var actx=null, analyser=null, master=null, freq=null, wave=null;
+  var playing=false, micOn=false, micStream=null, seqTimer=null, raf=null;
+  var PENT=[220,261.63,293.66,329.63,392,440,523.25,587.33,659.25,783.99];
+  var ASSETS=['Portada','Punto de partida','Mirada macro','Problema','IME Conecta','Sercotec','IME Link','Gobernanza','Datos','Cierre'];
+  function setup(){
+    if(actx){ if(actx.state==='suspended') actx.resume(); return; }
+    actx=new (window.AudioContext||window.webkitAudioContext)();
+    master=actx.createGain(); master.gain.value=0.9;
+    analyser=actx.createAnalyser(); analyser.fftSize=2048; analyser.smoothingTimeConstant=0.82;
+    var delay=actx.createDelay(); delay.delayTime.value=0.28;
+    var fb=actx.createGain(); fb.gain.value=0.3;
+    master.connect(analyser); analyser.connect(actx.destination);
+    master.connect(delay); delay.connect(fb); fb.connect(delay); delay.connect(analyser);
+    freq=new Uint8Array(analyser.frequencyBinCount);
+    wave=new Uint8Array(analyser.fftSize);
+  }
+  function tone(f,dur){
+    var t=actx.currentTime;
+    var o=actx.createOscillator(); o.type='triangle'; o.frequency.value=f;
+    var g=actx.createGain(); g.gain.setValueAtTime(0.0001,t);
+    g.gain.exponentialRampToValueAtTime(0.6,t+0.02);
+    g.gain.exponentialRampToValueAtTime(0.0001,t+dur);
+    o.connect(g); g.connect(master); o.start(t); o.stop(t+dur+0.05);
+  }
+  function startSeq(){
+    setup(); if(micOn) stopMic();
+    playing=true; var i=0;
+    clearInterval(seqTimer);
+    seqTimer=setInterval(function(){
+      tone(PENT[i%PENT.length],0.55);
+      readout.textContent='♪ '+ASSETS[i%ASSETS.length]+' — '+Math.round(PENT[i%PENT.length])+' Hz';
+      i++;
+    },380);
+  }
+  function stopAll(){ playing=false; clearInterval(seqTimer); seqTimer=null; if(!micOn) readout.textContent='Detenido.'; }
+  function stopMic(){ if(micStream){ micStream.getTracks().forEach(function(t){t.stop()}); micStream=null; } if(window._micSrc){ try{window._micSrc.disconnect()}catch(e){} window._micSrc=null; } micOn=false; micBtn.classList.remove('on'); micBtn.setAttribute('aria-pressed','false'); }
+  function toggleMic(){
+    setup();
+    if(micOn){ stopMic(); readout.textContent='Micrófono apagado.'; return; }
+    stopAll();
+    navigator.mediaDevices.getUserMedia({audio:true,video:false}).then(function(s){
+      micStream=s; var src=actx.createMediaStreamSource(s); window._micSrc=src;
+      src.connect(analyser); // solo al analizador, no a destination (evita acople)
+      micOn=true; micBtn.classList.add('on'); micBtn.setAttribute('aria-pressed','true');
+      readout.textContent='Analizando micrófono en vivo (no se graba ni se envía).';
+    }).catch(function(){ readout.textContent='No se pudo acceder al micrófono (permiso denegado).'; });
+  }
+  function resize(){ var r=cv.getBoundingClientRect(); dpr=Math.min(2,window.devicePixelRatio||1); cv.width=Math.max(1,r.width*dpr); cv.height=Math.max(1,r.height*dpr); W=r.width; H=r.height; }
+  function draw(){
+    raf=requestAnimationFrame(draw);
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    ctx.fillStyle='#080808'; ctx.fillRect(0,0,W,H);
+    var g1=ctx.createRadialGradient(W*0.5,H*1.05,10,W*0.5,H*1.05,Math.max(W,H)*0.9);
+    g1.addColorStop(0,'rgba(124,58,237,0.18)'); g1.addColorStop(1,'rgba(124,58,237,0)');
+    ctx.fillStyle=g1; ctx.fillRect(0,0,W,H);
+    if(!analyser){ return; }
+    analyser.getByteFrequencyData(freq);
+    var bars=72, step=Math.floor(freq.length/ bars / 1.6), bw=W/bars;
+    for(var i=0;i<bars;i++){
+      var v=freq[i*step]/255; var bh=Math.max(1,v*H*0.78);
+      var hue=168+ (i/bars)*40; // purple range
+      ctx.fillStyle='rgba('+Math.round(168- i*0.4)+',85,247,'+(0.35+0.55*v)+')';
+      ctx.fillRect(i*bw+1, H-bh, bw-2, bh);
+    }
+    analyser.getByteTimeDomainData(wave);
+    ctx.lineWidth=2; ctx.strokeStyle='rgba(131,240,226,0.9)'; ctx.beginPath();
+    for(var j=0;j<wave.length;j++){ var x=j/wave.length*W; var y=(wave[j]/255)*H*0.45 + H*0.06; if(j===0)ctx.moveTo(x,y); else ctx.lineTo(x,y); }
+    ctx.stroke();
+  }
+  playBtn.addEventListener('click',startSeq);
+  stopBtn.addEventListener('click',stopAll);
+  micBtn.addEventListener('click',toggleMic);
+  window.addEventListener('resize',resize);
+  setTimeout(function(){ resize(); requestAnimationFrame(draw); },30);
+})();
+</script>
+</body>
+</html>

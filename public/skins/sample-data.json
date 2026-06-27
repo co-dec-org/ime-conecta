@@ -1,0 +1,16 @@
+{
+  "schema": "analytics_anonymized",
+  "generated": "2026-06-21",
+  "note": "Datos de EJEMPLO con la estructura de la tabla anonimizada (sin datos personales). Reemplazar por la consulta real cuando exista la capa privada.",
+  "assets": [
+    { "asset": "portada", "label": "Portada", "views": 142, "dwell_ms_avg": 9200 },
+    { "asset": "punto-partida", "label": "Punto de partida", "views": 118, "dwell_ms_avg": 15400 },
+    { "asset": "mirada-macro", "label": "Mirada macro", "views": 96, "dwell_ms_avg": 12100 },
+    { "asset": "problema-detectado", "label": "Problema detectado", "views": 110, "dwell_ms_avg": 18800 },
+    { "asset": "ime-conecta", "label": "IME Conecta", "views": 134, "dwell_ms_avg": 21300 },
+    { "asset": "sercotec", "label": "Sercotec", "views": 71, "dwell_ms_avg": 8700 },
+    { "asset": "ime-link-2027", "label": "IME Link 2027", "views": 88, "dwell_ms_avg": 16500 },
+    { "asset": "gobernanza", "label": "Gobernanza", "views": 103, "dwell_ms_avg": 19900 },
+    { "asset": "datos", "label": "Datos", "views": 79, "dwell_ms_avg": 11200 }
+  ]
+}

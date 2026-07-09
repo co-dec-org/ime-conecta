@@ -1,0 +1,27 @@
+# ── .vercelignore ──────────────────────────────────────────────
+# Todo sigue versionado en git (protocolo). Esto solo evita que el
+# deploy PÚBLICO sirva documentación interna y material de trabajo.
+# El sitio publicado = index.html + styles.css + *.js + assets/ + robots/sitemap.
+
+# Informes y documentación (fuente .md; los .docx/.pdf viven en Drive)
+*.md
+
+# Material que no es el sitio público
+public/
+skin/
+supabase/
+informes/
+mockups/
+work/
+outputs/
+
+# Temporales / sistema
+*.tmp
+.DS_Store
+
+# Env y config que no deben servirse en el sitio público
+.env*
+.gitignore
+
+# Logo suelto en raíz (el sitio usa assets/logo-ime-mark.png)
+Logo IME.png

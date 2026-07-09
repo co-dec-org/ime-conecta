@@ -393,3 +393,24 @@ body, .card, .factbox, .search-panel, .notes-panel, .calib-panel, .sidenav li a,
 .notes-status.flash { animation: notesFlash .45s ease; }
 @keyframes notesFlash { from { opacity: .2; transform: translateY(-2px); } to { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) { .notes-status.flash { animation: none; } }
+
+/* ---- Contenido portado (IME Conecta) ---- */
+.section .lead{font-size:1.15rem;color:var(--text-dim);margin:.2rem 0 1rem}
+.section .definition{border-left:3px solid var(--accent);padding:.2rem 0 .2rem 1rem;color:var(--text)}
+.section .highlight{background:color-mix(in srgb,var(--accent) 12%,transparent);border:1px solid var(--line);border-radius:var(--radius);padding:.9rem 1.1rem;color:var(--text);font-weight:500;margin:1rem 0}
+.section ul,.section ol{line-height:1.7;padding-left:1.2rem}
+.section li{margin:.3rem 0}
+.section blockquote{margin:.8rem 0;padding:.5rem 0 .5rem 1.1rem;border-left:3px solid var(--accent);font-style:italic;color:var(--text)}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:1rem 0}
+.cards .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:.9rem 1rem;color:var(--text)}
+.table-wrap{overflow-x:auto;margin:1rem 0}
+.section table{width:100%;border-collapse:collapse;font-size:.95rem}
+.section th{text-align:left;background:color-mix(in srgb,var(--accent) 16%,transparent);color:var(--text);padding:.6rem .8rem;border:1px solid var(--line);font-weight:600}
+.section td{padding:.6rem .8rem;border:1px solid var(--line);color:var(--text);vertical-align:top}
+.section tbody tr:nth-child(even) td{background:color-mix(in srgb,var(--surface) 55%,transparent)}
+.flow{display:grid;gap:8px;counter-reset:step;list-style:none;padding:0;margin:1rem 0}
+.flow li{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:.7rem 1rem .7rem 2.4rem;position:relative}
+.flow li::before{counter-increment:step;content:counter(step);position:absolute;left:.9rem;color:var(--accent);font-weight:700}
+.timeline{display:grid;gap:14px;margin:1rem 0}
+.tl-item{border-left:2px solid var(--line);padding-left:1rem}
+.tl-label{color:var(--accent);font-size:1rem;margin:0 0 .3rem}

@@ -98,7 +98,7 @@ export const sections: SectionContent[] = [
       "Acuerdos sin seguimiento.",
       "Sobrecarga del directorio.",
       "Datos personales sin política.",
-      "Proyectos sin priorizacion.",
+      "Proyectos sin priorización.",
       "Alianzas ambiguas.",
       "Trabajo operativo invisibilizado.",
       "Activos digitales sin inventario.",
@@ -118,9 +118,9 @@ export const sections: SectionContent[] = [
       rows: [
         ["Información dispersa", "IME Conecta"],
         ["Acuerdos sin seguimiento", "Matriz de acuerdos"],
-        ["Sobrecarga del directorio", "Separacion directiva / operativa"],
+        ["Sobrecarga del directorio", "Separación directiva / operativa"],
         ["Directores sin área clara", "Carteras Directivas Estratégicas"],
-        ["Proyectos sin priorizacion", "Matriz de cartera y semáforo"],
+        ["Proyectos sin priorización", "Matriz de cartera y semáforo"],
         [
           "Datos personales sin política",
           "Gobernanza de datos y Ley 21.719",
@@ -268,7 +268,7 @@ export const sections: SectionContent[] = [
         [
           "Teko Pamies",
           "Dirección de Comunidad, Escena y Vinculación Artística",
-          "Socios/as, escena, artistas, redes territoriales y participacion gremial.",
+          "Socios/as, escena, artistas, redes territoriales y participación gremial.",
         ],
         [
           "Josefa Mujica",
@@ -306,12 +306,12 @@ export const sections: SectionContent[] = [
   },
   {
     id: "separacion",
-    navLabel: "Separacion directiva / operativa",
-    title: "Separacion directiva / operativa",
+    navLabel: "Separación directiva / operativa",
+    title: "Separación directiva / operativa",
     body:
       "IME debe distinguir claramente entre el trabajo directivo-gremial y el trabajo operativo-productivo.",
     table: {
-      columns: ["Capa", "Tipo de trabajo", "Ejemplos", "Condicion"],
+      columns: ["Capa", "Tipo de trabajo", "Ejemplos", "Condición"],
       rows: [
         [
           "Directiva",
@@ -322,7 +322,7 @@ export const sections: SectionContent[] = [
         [
           "Técnico-operativa",
           "Ejecución profesional",
-          "Producción, diseño, formulacion, rendiciones, desarrollo web, comunicaciones",
+          "Producción, diseño, formulación, rendiciones, desarrollo web, comunicaciones",
           "Valorizable y remunerable si existe presupuesto.",
         ],
         [
@@ -386,13 +386,13 @@ export const sections: SectionContent[] = [
           "Conflictos de interés",
           "Declaración y abstencion cuando corresponda.",
         ],
-        ["Proyectos sin capacidad real", "Matriz de priorizacion."],
+        ["Proyectos sin capacidad real", "Matriz de priorización."],
         [
           "Mezcla entre IME y vehículos externos",
-          "Separacion jurídica y funcional.",
+          "Separación jurídica y funcional.",
         ],
         ["Desorden documental", "Secretaría Técnica y archivo oficial."],
-        ["Baja participacion de socios/as", "Comités y comunicación clara."],
+        ["Baja participación de socios/as", "Comités y comunicación clara."],
         [
           "Dependencia de personas específicas",
           "Roles, procedimientos y archivo compartido.",
@@ -412,7 +412,7 @@ export const sections: SectionContent[] = [
         label: "0 días",
         items: [
           "Confirmar proyecto Sercotec: IME Conecta como foco de postulación.",
-          "Definir responsable de formulacion, presupuesto y carta Gantt.",
+          "Definir responsable de formulación, presupuesto y carta Gantt.",
           "Levantar documentos institucionales y antecedentes base.",
           "Alinear objetivos, resultados esperados y compromisos del directorio.",
         ],
@@ -433,7 +433,7 @@ export const sections: SectionContent[] = [
           "Actualizar base de socios/as.",
           "Diseñar versión inicial de IME Conecta.",
           "Activar comités prioritarios.",
-          "Ordenar documentacion.",
+          "Ordenar documentación.",
           "Definir criterios de datos y permisos.",
         ],
       },

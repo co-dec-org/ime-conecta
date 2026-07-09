@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>IME Skin — demo</title>
+<style>
+  html,body{margin:0;min-height:100%;background:#11100f;color:#f7f1e7;font-family:Inter,system-ui,sans-serif;}
+  #stage{position:relative;min-height:100vh;}
+  #bg{position:fixed;inset:0;width:100%;height:100%;display:block;z-index:0;}
+  .content{position:relative;z-index:2;max-width:760px;margin:0 auto;padding:18vh 24px 40px;}
+  h1{font-size:clamp(28px,5vw,52px);margin:0 0 12px;}
+  p{font-size:18px;line-height:1.6;color:#e9e1d4;max-width:60ch;}
+  .bar{position:fixed;z-index:3;left:16px;top:14px;display:flex;gap:12px;align-items:center;font-size:13px;text-shadow:0 1px 6px rgba(0,0,0,.6);}
+  select,label{background:#211f1c;color:#f7f1e7;border:1px solid rgba(247,241,231,.2);border-radius:6px;padding:4px 6px;}
+  label{display:flex;gap:6px;align-items:center;border:none;background:none;}
+</style>
+</head>
+<body>
+<div id="stage">
+  <canvas id="bg"></canvas>
+  <div class="bar">
+    <strong style="color:#5fd7df;">IME · FM</strong>
+    <select id="preset">
+      <option value="conecta">IME Conecta</option>
+      <option value="planificacion">IME Planificación</option>
+      <option value="link2027">IME Link 2027</option>
+    </select>
+    <label><input type="checkbox" id="scrim" checked> velo</label>
+    <label>intensidad <input type="range" id="inten" min="0" max="1" step="0.05" value="0.65"></label>
+  </div>
+  <div class="content">
+    <h1>Plan Estratégico IME Chile 2026-2028</h1>
+    <p>El skin va de fondo y se modula con el uso. El velo y la intensidad garantizan que el
+       texto siga legible: baja la intensidad o quita el velo para ver la diferencia de contraste.</p>
+  </div>
+</div>
+<script src="ime-skin.js"></script>
+<script>
+  var canvas = document.getElementById('bg');
+  function opts(){ return { preset: document.getElementById('preset').value, hemisphere:'S',
+    intensity: parseFloat(document.getElementById('inten').value),
+    scrim: document.getElementById('scrim').checked }; }
+  var ctrl = IMESkin.mount(canvas, opts());
+  function remount(){ ctrl.destroy(); ctrl = IMESkin.mount(canvas, opts()); }
+  document.getElementById('preset').addEventListener('change', remount);
+  document.getElementById('scrim').addEventListener('change', remount);
+  document.getElementById('inten').addEventListener('input', function(e){ ctrl.setIntensity(parseFloat(e.target.value)); });
+</script>
+</body>
+</html>

@@ -6,8 +6,8 @@
 
 :root {
   /* Identidad IME Link 2027 (cian-esmeralda) */
-  --cian: #5fd7df;
-  --esmeralda: #34d8a7;
+  --cian: #c084fc;
+  --esmeralda: #e879f9;
   --coral: #f07262;
   --dorado: #edc85d;
 
@@ -18,7 +18,7 @@
   --text: #eaf6f3;
   --text-dim: #9fb8b2;
   --border: #25393500;
-  --line: rgba(95, 215, 223, 0.18);
+  --line: rgba(192, 132, 252, 0.18);
   --accent: var(--cian);
   --accent-2: var(--esmeralda);
 
@@ -36,9 +36,9 @@
   --surface-2: #eef1ee;
   --text: #16201e;
   --text-dim: #4c605b;
-  --line: rgba(20, 120, 120, 0.18);
-  --accent: #0f9aa3;
-  --accent-2: #149c79;
+  --line: rgba(124, 58, 237, 0.18);
+  --accent: #7c3aed;
+  --accent-2: #a21caf;
 }
 
 * { box-sizing: border-box; }

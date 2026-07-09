@@ -65,9 +65,9 @@
   const root = document.documentElement;
   const VARS = ["bg", "surface", "surface-2", "text", "text-dim", "line", "accent", "accent-2"];
   const DARK = { bg:[11,20,19], surface:[20,33,31], "surface-2":[27,43,40], text:[234,246,243],
-    "text-dim":[159,184,178], line:[95,215,223,0.18], accent:[95,215,223], "accent-2":[52,216,167] };
+    "text-dim":[159,184,178], line:[192,132,252,0.18], accent:[192,132,252], "accent-2":[232,121,249] };
   const LIGHT = { bg:[246,244,239], surface:[255,255,255], "surface-2":[238,241,238], text:[22,32,30],
-    "text-dim":[76,96,91], line:[20,120,120,0.18], accent:[15,154,163], "accent-2":[20,156,121] };
+    "text-dim":[76,96,91], line:[124,58,237,0.18], accent:[124,58,237], "accent-2":[162,28,175] };
   // Coordenadas aproximadas por zona horaria (contexto grueso, sin ubicación precisa).
   const TZ = {
     "America/Santiago":[-33.45,-70.67],"Pacific/Easter":[-27.15,-109.43],"America/Punta_Arenas":[-53.16,-70.92],

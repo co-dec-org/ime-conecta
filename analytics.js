@@ -41,9 +41,9 @@
   }
   function banner(){
     var b=document.createElement("div");
-    b.setAttribute("role","dialog"); b.setAttribute("aria-label","Aviso de analitica");
-    b.style.cssText="position:fixed;left:12px;right:12px;bottom:12px;z-index:80;display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap;max-width:680px;margin:0 auto;padding:10px 16px;background:rgba(11,20,19,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(95,215,223,.22);border-radius:12px;box-shadow:0 16px 40px rgba(0,0,0,.45);color:#eaf6f3;font-size:13px;";
-    b.innerHTML='<span style="flex:1;min-width:200px;">Usamos analitica anonima para entender como se navega y mejorar el sitio. Sin datos personales ni ubicacion precisa.</span><span style="display:flex;gap:8px;"><button data-a="no" style="background:transparent;color:#eaf6f3;border:1px solid rgba(95,215,223,.3);border-radius:999px;padding:7px 14px;cursor:pointer;">No</button><button data-a="yes" style="background:linear-gradient(120deg,#5fd7df,#34d8a7);color:#04201f;border:none;border-radius:999px;padding:7px 16px;font-weight:600;cursor:pointer;">Aceptar</button></span>';
+    b.setAttribute("role","dialog"); b.setAttribute("aria-label","Aviso de analítica");
+    b.style.cssText="position:fixed;left:12px;right:12px;bottom:12px;z-index:80;display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap;max-width:680px;margin:0 auto;padding:10px 16px;background:rgba(18,16,26,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(192,132,252,.22);border-radius:12px;box-shadow:0 16px 40px rgba(0,0,0,.45);color:#ece7f6;font-size:13px;";
+    b.innerHTML='<span style="flex:1;min-width:200px;">Usamos analítica anónima para entender cómo se navega y mejorar el sitio. Sin datos personales ni ubicación precisa.</span><span style="display:flex;gap:8px;"><button data-a="no" style="background:transparent;color:#ece7f6;border:1px solid rgba(192,132,252,.3);border-radius:999px;padding:7px 14px;cursor:pointer;">No</button><button data-a="yes" style="background:linear-gradient(120deg,#c084fc,#e879f9);color:#2a0a3a;border:none;border-radius:999px;padding:7px 16px;font-weight:600;cursor:pointer;">Aceptar</button></span>';
     b.addEventListener("click",function(e){
       var a=e.target&&e.target.getAttribute?e.target.getAttribute("data-a"):null;
       if(!a) return;

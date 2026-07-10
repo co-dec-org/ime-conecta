@@ -310,9 +310,10 @@
       session = { token: data.access_token, userId: data.user.id, name: email };
       session.mustChange = !!(data.user && data.user.user_metadata && data.user.user_metadata.must_change_password);
       // Validar perfil de director activo.
-      const prof = await rest(`/rest/v1/ime_socios?id=eq.${session.userId}&active=eq.true&select=full_name`, {});
+      const padron = (cfg.tables && cfg.tables.directors) || "ime_directors";
+      const prof = await rest(`/rest/v1/${padron}?id=eq.${session.userId}&active=eq.true&select=full_name`, {});
       const rows = await prof.json();
-      if (!rows.length) { session = null; setStatus(status, "Tu cuenta no está habilitada como socix.", "err"); return; }
+      if (!rows.length) { session = null; setStatus(status, "Tu cuenta no está habilitada en el padrón de IME Conecta.", "err"); return; }
       session.name = rows[0].full_name || email;
       session.email = email;
       window.dispatchEvent(new CustomEvent("ime:auth", { detail: { email } }));

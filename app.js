@@ -1,5 +1,5 @@
 /* ============================================================
-   IME Link 2027 — Interacción del sitio
+   IME Conecta — Interacción del sitio
    Navegación, índice, progreso, búsqueda, tema, modo presentación
    y caja flotante de Notas (Supabase Auth + PostgREST, sin SDK).
    ============================================================ */

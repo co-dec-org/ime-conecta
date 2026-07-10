@@ -1,5 +1,5 @@
 /* ============================================================
-   IME Link 2027 — Calibrador de entrada
+   IME Conecta — Calibrador de entrada
    Panel para ajustar en vivo los parámetros del input
    (mouse · touch · multitouch) del motor de gráfica viva.
    Diagnóstico del dispositivo · presets (localStorage) · export/import.
@@ -161,7 +161,7 @@
     const blob = new Blob([JSON.stringify(api.getParams(), null, 2)], { type: "application/json" });
     const a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
-    a.download = "ime-link-input-calibracion.json";
+    a.download = "ime-conecta-input-calibracion.json";
     a.click(); URL.revokeObjectURL(a.href);
   });
 

@@ -1,17 +1,16 @@
-/* Copiar resumen ejecutivo de IME Link 2027 al portapapeles.
+/* Copiar resumen ejecutivo de IME Conecta al portapapeles.
    Archivo externo (la CSP 'self' bloquea scripts inline). */
 (function () {
   "use strict";
   var summary = [
-    "IME Link 2027 — Festival de cultura electrónica",
-    "Organizado por IME Chile A.G. (asociación gremial con personalidad jurídica desde 2018). Segunda edición del encuentro de las artes electrónicas independientes de Chile: música en vivo, conversatorios, talleres e instalaciones. Santiago de Chile, 2027.",
-    "La asociación está registrada en el Ministerio de Economía y representa a los principales actores de las artes electrónicas independientes y transdisciplinares de Chile: músicxs, DJs, productorxs, artistas sonoros y sonovisuales, colectivos, sellos y gestorxs culturales.",
-    "Primera edición (2025): Centro Cultural Matucana 100, 21 y 22 de junio; más de 30 artistas con cartel elegido por votación de socixs; primer festival de música electrónica del país organizado mediante un modelo DAO. Documentado en el Estudio de impacto Festival IME Link 2025.",
-    "Modelo DAO: gobernanza horizontal, participativa y transparente; el cartel y las definiciones se eligen en votación del propio gremio.",
-    "Ejes 2027: (01) Escena en vivo — cartel intergeneracional y paritario; (02) Conocimiento — conversatorios, masterclasses y talleres; (03) Arte y tecnología — instalaciones sonovisuales e inmersivas; (04) Territorio y redes — vínculo con regiones y con la escena internacional.",
-    "Participa: socixs IME (votaciones y DAO), artistas y colectivos (convocatoria abierta) y aliados e instituciones (alianzas y auspicios).",
-    "Programación en construcción: line-up, fechas y sede se anunciarán progresivamente en el sitio y los canales de IME.",
-    "Contacto: Instagram @ime_chile · imechile.org · ime-link-2027.vercel.app."
+    "IME Conecta — Gobernanza operacional para IME Chile A.G.",
+    "Gobernanza operacional para una nueva escala gremial propone que IME Chile ordene su gestión interna para sostener una etapa de mayor envergadura institucional.",
+    "IME Conecta se plantea como infraestructura interna, no solo como software: debe registrar socios/as, comités, acuerdos, documentos, proyectos, responsables, plazos, datos personales, activos digitales y avances.",
+    "La propuesta incorpora capacidades web locales, como una Capa Web-Video API, para capturar avatar, boletas o evidencias operativas sin enviar datos a terceros.",
+    "La oportunidad táctica inmediata es Sercotec Fortalecimiento Gremial 2026 - Región Metropolitana, con foco de postulación en IME Conecta.",
+    "IME Link 2027 se propone como sujeto de prueba estratégico para validar la infraestructura en un caso real de planificación, alianzas, comités, trazabilidad y proyección pública.",
+    "El modelo separa dirección estratégica, carteras directivas, comités ejecutivos y operación valorizable, incorporando gobernanza de datos y criterios de la Ley 21.719.",
+    "Contacto: Instagram @ime_chile · imechile.org · ime-conecta.vercel.app."
   ].join("\n\n");
 
   function fallbackCopy(text) {

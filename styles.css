@@ -1,26 +1,26 @@
 /* ============================================================
-   IME Link 2027 — Sistema visual
-   Identidad: campo cian–esmeralda (aprobada por co-dec)
+   IME Conecta — Sistema visual
+   Identidad: campo violeta–magenta (app_key: ime-conecta)
    Patrón reutilizable IME: tema oscuro editorial + claro alterno
    ============================================================ */
 
 :root {
-  /* Identidad IME Link 2027 (cian-esmeralda) */
-  --cian: #c084fc;
-  --esmeralda: #e879f9;
+  /* Identidad IME Conecta (violeta-magenta) */
+  --violeta: #c084fc;
+  --magenta: #e879f9;
   --coral: #f07262;
   --dorado: #edc85d;
 
   /* Tema oscuro (principal) */
-  --bg: #0b1413;
-  --surface: #14211f;
-  --surface-2: #1b2b28;
-  --text: #eaf6f3;
-  --text-dim: #9fb8b2;
+  --bg: #130f1c;
+  --surface: #1b1526;
+  --surface-2: #251d34;
+  --text: #f1ecf7;
+  --text-dim: #b4a8c6;
   --border: #25393500;
   --line: rgba(192, 132, 252, 0.18);
-  --accent: var(--cian);
-  --accent-2: var(--esmeralda);
+  --accent: var(--violeta);
+  --accent-2: var(--magenta);
 
   --radius: 8px;
   --maxw: 1080px;
@@ -73,7 +73,7 @@ body {
 /* Accesibilidad */
 .skip-link {
   position: absolute; left: -999px; top: 0; z-index: 100;
-  background: var(--accent); color: #04201f; padding: 10px 16px; border-radius: 0 0 8px 0;
+  background: var(--accent); color: #1b0a2e; padding: 10px 16px; border-radius: 0 0 8px 0;
   font-weight: 600;
 }
 .skip-link:focus { left: 0; }
@@ -85,7 +85,7 @@ a { color: var(--accent); }
 .progress { position: fixed; top: 0; left: 0; width: 100%; height: 3px; z-index: 60; background: transparent; }
 .progress span {
   display: block; height: 100%; width: 0%;
-  background: linear-gradient(90deg, var(--cian), var(--esmeralda));
+  background: linear-gradient(90deg, var(--violeta), var(--magenta));
 }
 
 /* Cabecera */
@@ -178,7 +178,7 @@ p { max-width: 72ch; }
 .hero { min-height: 100vh; display: flex; align-items: center; padding-top: var(--header-h); }
 .hero-title { font-size: clamp(56px, 13vw, 150px); font-weight: 800; margin: 6px 0 18px; letter-spacing: -0.03em; }
 .hero-title .accent {
-  background: linear-gradient(120deg, var(--cian), var(--esmeralda));
+  background: linear-gradient(120deg, var(--violeta), var(--magenta));
   -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
 }
 .hero-sub { font-size: clamp(18px, 2.4vw, 23px); max-width: 60ch; color: var(--text); }
@@ -188,7 +188,7 @@ p { max-width: 72ch; }
 /* Botones */
 .btn { display: inline-block; padding: 12px 22px; border-radius: 999px; font-weight: 600; text-decoration: none; cursor: pointer; font-size: 15px; border: 1px solid transparent; transition: transform .12s, background .15s; }
 .btn:hover { transform: translateY(-1px); }
-.btn-primary { background: linear-gradient(120deg, var(--cian), var(--esmeralda)); color: #04201f; }
+.btn-primary { background: linear-gradient(120deg, var(--violeta), var(--magenta)); color: #1b0a2e; }
 .btn-ghost { background: transparent; color: var(--text); border-color: var(--line); }
 .btn-ghost:hover { border-color: var(--accent); }
 .btn-sm { padding: 8px 14px; font-size: 13px; }
@@ -250,7 +250,7 @@ body.presenting .header, body.presenting .sidenav, body.presenting .progress, bo
 /* Caja flotante de notas */
 .notes-toggle {
   position: fixed; right: 18px; bottom: 18px; z-index: 45;
-  background: linear-gradient(120deg, var(--cian), var(--esmeralda)); color: #04201f;
+  background: linear-gradient(120deg, var(--violeta), var(--magenta)); color: #1b0a2e;
   border: none; border-radius: 999px; padding: 12px 18px; font-weight: 700; cursor: pointer;
   box-shadow: 0 10px 30px rgba(0,0,0,.4);
 }
@@ -414,3 +414,29 @@ body, .card, .factbox, .search-panel, .notes-panel, .calib-panel, .sidenav li a,
 .timeline{display:grid;gap:14px;margin:1rem 0}
 .tl-item{border-left:2px solid var(--line);padding-left:1rem}
 .tl-label{color:var(--accent);font-size:1rem;margin:0 0 .3rem}
+
+
+/* ================= Correcciones UX móvil (reporte 2026-07-10) ================= */
+/* H3: encabezado más opaco para que el contenido no se le superponga */
+.header { background: color-mix(in srgb, var(--bg) 94%, transparent); }
+
+@media (max-width: 820px) {
+  /* H2: en móvil evitamos el bug de composición de iOS (backdrop-filter sobre el lienzo WebGL) */
+  .card, .factbox { backdrop-filter: none; -webkit-backdrop-filter: none; background: var(--surface); }
+  .header { background: var(--bg); backdrop-filter: none; -webkit-backdrop-filter: none; }
+  .notes-panel, .calib-panel, .search-panel { backdrop-filter: none; -webkit-backdrop-filter: none; background: var(--surface); }
+}
+
+/* H4: encabezado responsive en pantallas chicas (los botones no se desbordan) */
+@media (max-width: 600px) {
+  .header { padding: 0 12px; }
+  .header-actions { gap: 6px; }
+  .hbtn { padding: 6px 10px; font-size: 12px; }
+  .brand-name { font-size: 15px; }
+}
+@media (max-width: 400px) {
+  .hbtn { padding: 6px 8px; font-size: 11px; }
+}
+
+/* H5: espacio inferior para que el botón flotante no tape el texto */
+.footer { padding-bottom: 96px; }

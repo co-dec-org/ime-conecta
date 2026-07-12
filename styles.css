@@ -58,17 +58,25 @@ body {
   html { scroll-behavior: auto; }
 }
 
-/* Gráfica viva: lienzo de fondo */
+/* Gráfica viva: lienzo de fondo
+   Nota iOS/iPadOS: z-index negativo en elementos fixed corrompe el
+   compositor de Safari al hacer scroll (parches del fondo sobre el
+   contenido). Se usa z-index >= 0 + translateZ(0) para aislar capas,
+   y main se eleva con su propio stacking context. */
 #ime-skin {
   position: fixed; inset: 0; width: 100%; height: 100%;
-  z-index: -2; display: block;
+  z-index: 0; display: block; pointer-events: none;
+  transform: translateZ(0);
 }
 .skin-veil {
-  position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  position: fixed; inset: 0; z-index: 1; pointer-events: none;
   background: radial-gradient(120% 90% at 50% 0%, transparent 0%, var(--bg) 78%);
   opacity: 0.86;
+  transform: translateZ(0);
 }
 [data-theme="light"] .skin-veil { opacity: 0.9; }
+
+main { position: relative; z-index: 2; }
 
 /* Accesibilidad */
 .skip-link {

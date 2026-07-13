@@ -316,7 +316,7 @@
       if (!rows.length) { session = null; setStatus(status, "Tu cuenta no está habilitada en el padrón de IME Conecta.", "err"); return; }
       session.name = rows[0].full_name || email;
       session.email = email;
-      window.dispatchEvent(new CustomEvent("ime:auth", { detail: { email } }));
+      window.dispatchEvent(new CustomEvent("ime:auth", { detail: { email, token: session.token, userId: session.userId } }));
       enterEditor();
     } catch (e) { setStatus(status, "Error de conexión con Supabase.", "err"); }
   });

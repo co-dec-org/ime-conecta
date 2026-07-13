@@ -310,11 +310,29 @@ body.presenting .header, body.presenting .sidenav, body.presenting .progress, bo
 .calib-field span { display: flex; justify-content: space-between; font-size: 12px; color: var(--text-dim); }
 .calib-field em { color: var(--accent); font-style: normal; font-variant-numeric: tabular-nums; }
 .calib-field input[type="range"] { width: 100%; accent-color: var(--accent); }
+.calib-field input[type="color"] { width: 100%; height: 28px; padding: 0; border: 1px solid var(--line); border-radius: 6px; background: transparent; cursor: pointer; }
+.calib-group { font-size: 10px; text-transform: uppercase; letter-spacing: 1.4px; color: var(--text-dim); margin: 4px 0 0; }
+.calib-wheel { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.calib-wheel-disc { position: relative; width: 170px; height: 170px; border-radius: 50%; background: conic-gradient(from 90deg, #f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00); cursor: grab; touch-action: none; }
+.calib-wheel-disc:active { cursor: grabbing; }
+.calib-wheel-sat { position: absolute; inset: 0; border-radius: 50%; background: radial-gradient(circle, #8a8a8a 0%, rgba(138,138,138,0) 72%); pointer-events: none; }
+.calib-wheel-h { position: absolute; width: 22px; height: 22px; border-radius: 50%; border: 3px solid #fff; transform: translate(-50%, -50%); pointer-events: none; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 700; color: #111; box-shadow: 0 2px 8px rgba(0,0,0,.4); }
+.calib-wheel-legend { display: flex; gap: 14px; font-size: 11px; color: var(--text-dim); }
+.calib-wheel-legend i { display: inline-block; width: 11px; height: 11px; border-radius: 50%; margin-right: 5px; vertical-align: -1px; }
+.calib-wheel-legend em { font-style: normal; color: var(--text-dim); }
 .calib-row { display: flex; flex-wrap: wrap; gap: 6px; margin: 14px 0 10px; }
-.calib-presets { display: flex; align-items: center; gap: 12px; font-size: 12px; color: var(--text-dim); flex-wrap: wrap; }
-.calib-presets > div { display: flex; align-items: center; gap: 6px; }
-.calib-presets b { color: var(--text); }
+.calib-presets { display: flex; flex-direction: column; align-items: stretch; gap: 7px; font-size: 12px; color: var(--text-dim); }
+.calib-presets > span { line-height: 1.45; }
+.calib-presets > span em { font-style: normal; color: var(--text); }
+.calib-presets > div { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.calib-presets b { color: var(--text); min-width: 58px; }
+.calib-presets > div[data-current="1"] b { color: var(--accent); }
 .calib-status { font-size: 12px; color: var(--accent-2); margin: 8px 0 0; min-height: 14px; }
+.calib-sim { border-top: 1px solid var(--line); margin-top: 12px; padding-top: 10px; display: flex; flex-direction: column; gap: 8px; }
+.calib-sim-head { display: flex; align-items: center; justify-content: space-between; }
+.calib-sim-head strong { font-size: 12.5px; font-weight: 600; color: var(--text); }
+.calib-sim-head span { font-size: 10px; color: var(--text-dim); }
+.calib-sim-btns { display: flex; flex-wrap: wrap; gap: 6px; }
 
 /* ---- Marca IME (logo oficial) ---- */
 .brand { align-items: center; }

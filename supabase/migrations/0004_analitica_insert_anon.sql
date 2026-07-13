@@ -1,0 +1,25 @@
+-- NOTA DE VERIFICACIÓN — NO REQUIERE APLICARSE.
+--
+-- Esta migración se preparó para corregir la dependencia señalada en
+-- IME_L2_Bitacora_ConversionTrilogiaVanilla ("sign-in anónimo
+-- desactivado; afecta a la analítica anónima opt-in").
+--
+-- Verificado en producción el 2026-07-13 (SQL Editor, proyecto
+-- IME Chile database): las políticas de INSERT para {anon,authenticated}
+-- YA EXISTEN en ime_visitas ("visitas insert") e ime_eventos
+-- ("eventos insert"), y la analítica está escribiendo con normalidad
+-- (1006 eventos, 59 visitas; prueba en vivo: una visita nueva quedó
+-- registrada y ime_pulso la contó al instante).
+--
+-- Conclusión: la nota de la bitácora quedó obsoleta — el sign-in
+-- anónimo NO es necesario, porque analytics.js escribe con la clave
+-- publicable (rol anon) y las políticas de inserción lo permiten.
+-- Se conserva este archivo como constancia de la verificación.
+--
+-- SQL original (redundante, no aplicar):
+-- create policy "visitas_insert_publico" on public.ime_visitas
+--   for insert to anon, authenticated
+--   with check (app_key in ('ime-link','ime-conecta','ime-planificacion'));
+-- create policy "eventos_insert_publico" on public.ime_eventos
+--   for insert to anon, authenticated
+--   with check (app_key in ('ime-link','ime-conecta','ime-planificacion'));

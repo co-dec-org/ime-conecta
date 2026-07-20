@@ -472,4 +472,8 @@ body, .card, .factbox, .search-panel, .notes-panel, .calib-panel, .sidenav li a,
 .hbtn-cta:hover{filter:brightness(1.05)}
 
 /* Botón flotante de acceso al área de Socixs (encima del de Notas) */
-.socixs-toggle{bottom:84px;text-decoration:none}
+.socixs-toggle{left:18px;right:auto;bottom:18px;text-decoration:none}
+
+/* Calibrador apilado sobre el botón Socixs (esquina inferior izquierda) */
+.calib-toggle{left:18px;right:auto;bottom:84px}
+.calib-panel{left:18px;bottom:146px}

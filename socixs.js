@@ -129,6 +129,7 @@
       var rows = await r.json();
       var p = (Array.isArray(rows) && rows[0]) || {};
       $("#sx-artist").value = p.artist_name || "";
+      var _ra = $("#sx-reg-artist"); if (_ra) _ra.value = p.artist_name || "";
       $("#sx-bio").value = p.bio || "";
       links = Array.isArray(p.links) ? p.links : [];
       renderLinks();
@@ -159,6 +160,7 @@
   $("#sx-save").addEventListener("click", async function () {
     setStatus($("#sx-profile-status"), "Guardando…", "info");
     var clean = links.filter(function (l) { return (l.label || "").trim() || (l.url || "").trim(); });
+    var _ra2 = $("#sx-reg-artist"); if (_ra2) _ra2.value = $("#sx-artist").value.trim();
     var body = [{
       id: session.userId,
       artist_name: $("#sx-artist").value.trim() || null,

@@ -89,6 +89,7 @@
         session.isDirector = Array.isArray(drows) && drows.length > 0;
         session.role = session.isDirector ? (drows[0].role || null) : null;
       } catch (e) { session.isDirector = false; }
+      if (window.IMEAuth) IMEAuth.save({ token: session.token, userId: session.userId, email: session.email, name: session.name, role: session.role, mustChange: session.mustChange, exp: Date.now() + ((data.expires_in || 3600) * 1000) });
       enterApp();
     } catch (e) { setStatus($("#sx-login-status"), "Error de conexión con Supabase.", "err"); }
   });
@@ -98,6 +99,7 @@
     $("#sx-app").hidden = false;
     $("#sx-who").textContent = session.name;
     $("#sx-panel-link").hidden = !session.isDirector;
+    $("#sx-signout").hidden = false;
     if (session.mustChange) setStatus($("#sx-profile-status"), "Por seguridad, cambia tu contraseña temporal en “Cuenta”.", "info");
     loadProfile();
     loadDocs();
@@ -105,8 +107,11 @@
 
   $("#sx-signout").addEventListener("click", function () {
     session = null;
+    if (window.IMEAuth) IMEAuth.clear();
     $("#sx-app").hidden = true;
     $("#sx-login").hidden = false;
+    $("#sx-signout").hidden = true;
+    $("#sx-panel-link").hidden = true;
     $("#sx-pass").value = "";
   });
 
@@ -245,4 +250,12 @@
       }
     } catch (e) { /* silencioso */ }
   }
+
+  // Sesión compartida (Notas ↔ Socixs): si ya hay sesión válida, entrar directo.
+  (function restoreSession() {
+    var s = window.IMEAuth && IMEAuth.load();
+    if (!s) return;
+    session = { token: s.token, userId: s.userId, email: s.email, name: s.name || s.email, role: s.role || null, isDirector: !!s.role, mustChange: !!s.mustChange };
+    enterApp();
+  })();
 })();

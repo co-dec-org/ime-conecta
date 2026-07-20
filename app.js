@@ -239,7 +239,8 @@
   const status = $("#notes-status");
   const status2 = $("#notes-status2");
   const sectionLabel = $("#notes-section-label");
-  let session = null; // { token, userId, name }
+  let session = (window.IMEAuth && IMEAuth.load()) || null; // { token, userId, name, role, ... }
+  if (session) { const _s = session; setTimeout(function () { window.dispatchEvent(new CustomEvent("ime:auth", { detail: { email: _s.email, role: _s.role || null, token: _s.token, userId: _s.userId } })); }, 0); }
 
   // La nota se asocia a la sección activa actual (usa el cache de posiciones).
   function activeSectionId() {
@@ -254,7 +255,7 @@
   function openPanel(open) {
     panel.hidden = !open;
     toggle.setAttribute("aria-expanded", String(open));
-    if (open) { refreshLabel(); }
+    if (open) { refreshLabel(); if (session && editorBox && editorBox.hidden) enterEditor(); }
   }
   toggle.addEventListener("click", () => openPanel(panel.hidden));
   $("#notes-close").addEventListener("click", () => openPanel(false));
@@ -310,13 +311,18 @@
       session = { token: data.access_token, userId: data.user.id, name: email };
       session.mustChange = !!(data.user && data.user.user_metadata && data.user.user_metadata.must_change_password);
       // Validar perfil de director activo.
-      const padron = (cfg.tables && cfg.tables.directors) || "ime_directors";
-      const prof = await rest(`/rest/v1/${padron}?id=eq.${session.userId}&active=eq.true&select=full_name,role`, {});
+      // Valida socix activo del padrón general (ime_socios), igual que IME Link.
+      const prof = await rest(`/rest/v1/ime_socios?id=eq.${session.userId}&active=eq.true&select=full_name`, {});
       const rows = await prof.json();
-      if (!rows.length) { session = null; setStatus(status, "Tu cuenta no está habilitada en el padrón de IME Conecta.", "err"); return; }
+      if (!Array.isArray(rows) || !rows.length) { session = null; setStatus(status, "Tu cuenta no está habilitada en el padrón de IME Conecta.", "err"); return; }
       session.name = rows[0].full_name || email;
       session.email = email;
-      window.dispatchEvent(new CustomEvent("ime:auth", { detail: { email, role: (rows[0] && rows[0].role) || null, token: session.token, userId: session.userId } }));
+      // Rol de directorio (para el calibrador) desde ime_directors.
+      let _role = null;
+      try { const _dr = await rest(`/rest/v1/ime_directors?id=eq.${session.userId}&active=eq.true&select=role`, {}); const _drows = await _dr.json(); _role = (Array.isArray(_drows) && _drows[0] && _drows[0].role) || null; } catch (e) {}
+      session.role = _role;
+      if (window.IMEAuth) IMEAuth.save({ token: session.token, userId: session.userId, email: session.email, name: session.name, role: _role, mustChange: session.mustChange, exp: Date.now() + ((data.expires_in || 3600) * 1000) });
+      window.dispatchEvent(new CustomEvent("ime:auth", { detail: { email, role: _role, token: session.token, userId: session.userId } }));
       enterEditor();
     } catch (e) { setStatus(status, "Error de conexión con Supabase.", "err"); }
   });
@@ -341,7 +347,7 @@
     $("#notes-text").value = ""; clearImages(); setStatus(status2, "", "");
   }
   $("#notes-signout").addEventListener("click", () => {
-    session = null; editorBox.hidden = true; loginBox.hidden = false; var _c = $("#notes-clave"); if (_c) _c.hidden = true;
+    session = null; if (window.IMEAuth) IMEAuth.clear(); editorBox.hidden = true; loginBox.hidden = false; var _c = $("#notes-clave"); if (_c) _c.hidden = true;
     $("#notes-pass").value = ""; setStatus(status, "", ""); clearImages();
     window.dispatchEvent(new CustomEvent("ime:auth", { detail: { email: null } }));
   });

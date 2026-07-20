@@ -52,7 +52,6 @@
       <span class="brand-name">Conecta</span>
     </a>
     <nav class="header-actions" aria-label="Acciones">
-      <a id="btn-socixs" class="hbtn hbtn-cta" href="socixs.html">Socixs</a>
       <button id="btn-copy" class="hbtn">Copiar resumen</button>
       <button id="btn-search" class="hbtn" aria-controls="search-panel" aria-expanded="false">Buscar</button>
       <button id="btn-theme" class="hbtn" aria-pressed="false">Tema</button>
@@ -216,6 +215,9 @@
   </div>
 
   <!-- Caja flotante de Notas (directores) -->
+  <a id="socixs-toggle" class="notes-toggle socixs-toggle" href="socixs.html" aria-label="Área de socixs" title="Área de socixs">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21a8 8 0 0 0-16 0"/><circle cx="12" cy="7" r="4"/></svg>
+  </a>
   <button id="notes-toggle" class="notes-toggle" aria-controls="notes-panel" aria-expanded="false" aria-label="Notas">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5 8.5 8.5 0 0 1-3.8-.9L3 20l1.4-4.2A8.5 8.5 0 1 1 21 11.5z"/></svg>
   </button>
@@ -274,6 +276,7 @@
   </section>
 
   <script src="supabase-config.js"></script>
+  <script src="ime-auth.js"></script>
   <script src="ime-skin.js"></script>
   <script src="app.js"></script>
   <script src="input-calibrator.js"></script>

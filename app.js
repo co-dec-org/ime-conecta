@@ -259,6 +259,8 @@
   }
   toggle.addEventListener("click", () => openPanel(panel.hidden));
   $("#notes-close").addEventListener("click", () => openPanel(false));
+  // Abrir Notas al llegar con ?notas=1 (desde la página de socixs).
+  try { if (/[?&]notas=1(&|$)/.test(location.search)) setTimeout(() => openPanel(true), 80); } catch (e) {}
   addEventListener("scroll", () => { if (!panel.hidden) { refreshLabel(); updateNoteContext(); } }, { passive: true });
 
   // Arrastrar el panel por su cabecera (posición persistente).

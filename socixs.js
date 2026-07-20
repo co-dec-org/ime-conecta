@@ -98,6 +98,8 @@
     $("#sx-login").hidden = true;
     $("#sx-app").hidden = false;
     $("#sx-who").textContent = session.name;
+    var _rn = $("#sx-reg-name"); if (_rn) _rn.value = session.name || "";
+    var _re = $("#sx-reg-email"); if (_re) _re.value = session.email || "";
     $("#sx-panel-link").hidden = !session.isDirector;
     $("#sx-signout").hidden = false;
     if (session.mustChange) setStatus($("#sx-profile-status"), "Por seguridad, cambia tu contraseña temporal en “Cuenta”.", "info");

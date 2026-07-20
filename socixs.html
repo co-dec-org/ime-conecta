@@ -57,6 +57,16 @@
     .sx-x { background: transparent; border: 1px solid var(--line); color: var(--text-dim); border-radius: 8px; padding: 5px 9px; cursor: pointer; }
     .sx-hint { font-size: .82rem; color: var(--text-dim); }
     .sx-soon { opacity: .55; }
+    .sx-sep { border: none; border-top: 1px solid var(--line); margin: 16px 0; }
+    .sx-h3 { font-size: 1rem; margin: 12px 0 6px; }
+    .sx-cuota-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; margin: 0 0 8px; }
+    .sx-cuota-per { flex: 1; min-width: 120px; }
+    .sx-cuota-monto { font-weight: 600; }
+    .sx-cuota-estado { font-size: .66rem; text-transform: uppercase; letter-spacing: .05em; padding: 2px 7px; border-radius: 999px; border: 1px solid var(--line); white-space: nowrap; }
+    .sx-est-pendiente { color: #fbbf24; border-color: color-mix(in srgb, #fbbf24 45%, transparent); }
+    .sx-est-pagada, .sx-est-enviado { color: #93c5fd; border-color: color-mix(in srgb, #93c5fd 45%, transparent); }
+    .sx-est-verificada, .sx-est-verificado, .sx-est-exenta { color: #6ee7b7; border-color: color-mix(in srgb, #34d399 45%, transparent); }
+    .sx-est-rechazado { color: #f6788a; border-color: color-mix(in srgb, #f6788a 45%, transparent); }
   </style>
 </head>
 <body>
@@ -157,9 +167,24 @@
             <p class="sx-hint">Si algún dato está incorrecto, avisa al directorio.</p>
           </section>
 
-          <section class="sx-card sx-soon" aria-label="Cuotas">
+          <section class="sx-card" aria-label="Cuotas y comprobantes">
             <h2>Cuotas y comprobantes <span class="sx-tag sx-tag-priv">Privado</span></h2>
-            <p class="sx-muted">Próximamente: tu estado y historial de cuotas, subir comprobantes y link de pago.</p>
+            <p id="sx-cuotas-estado" class="sx-hint">Cargando tu estado de cuotas…</p>
+            <div id="sx-cuotas"></div>
+            <hr class="sx-sep" />
+            <h3 class="sx-h3">Subir comprobante</h3>
+            <p class="sx-hint">Comprobante de tu transferencia (PDF o imagen, máx. 10 MB).</p>
+            <div class="sx-row" style="margin:8px 0 12px">
+              <select id="sx-comp-cuota" class="sx-sel" style="width:auto"><option value="">Cuota (opcional)</option></select>
+              <input id="sx-comp-monto" class="sx-in" type="number" placeholder="Monto $" style="width:110px" />
+              <input id="sx-comp-fecha" class="sx-in" type="date" style="width:auto" />
+              <label class="sx-btn ghost" style="cursor:pointer">Adjuntar y enviar
+                <input id="sx-comp-file" type="file" accept="application/pdf,image/png,image/jpeg,image/webp" hidden />
+              </label>
+              <span id="sx-comp-status" class="sx-status"></span>
+            </div>
+            <h3 class="sx-h3">Mis comprobantes</h3>
+            <div id="sx-comps"></div>
           </section>
         </div>
 

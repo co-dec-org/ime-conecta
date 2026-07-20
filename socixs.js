@@ -13,7 +13,7 @@
   var $ = function (s) { return document.querySelector(s); };
   var session = null; // { token, userId, email, name, isDirector, mustChange }
 
-  var FOTOS = "socios-fotos", DOCS = "socios-docs";
+  var FOTOS = "socios-fotos", DOCS = "socios-docs", COMP = "socios-comprobantes";
 
   // Gráfica viva de fondo (misma identidad violeta-magenta que el sitio).
   try {
@@ -105,6 +105,8 @@
     if (session.mustChange) setStatus($("#sx-profile-status"), "Por seguridad, cambia tu contraseña temporal en “Cuenta”.", "info");
     loadProfile();
     loadDocs();
+    loadCuotas();
+    loadComprobantes();
   }
 
   $("#sx-signout").addEventListener("click", function () {
@@ -252,6 +254,74 @@
       }
     } catch (e) { /* silencioso */ }
   }
+
+  // ---------- cuotas y comprobantes ----------
+  function CLP(n) { return n == null ? "" : "$" + Number(n).toLocaleString("es-CL"); }
+
+  async function loadCuotas() {
+    try {
+      var r = await rest("/rest/v1/ime_cuotas?socio_id=eq." + session.userId + "&select=*&order=vence.asc");
+      var rows = await r.json();
+      var box = $("#sx-cuotas"), sel = $("#sx-comp-cuota");
+      box.innerHTML = ""; if (sel) sel.length = 1;
+      if (!Array.isArray(rows) || !rows.length) {
+        $("#sx-cuotas-estado").textContent = "No tienes cuotas registradas.";
+        box.innerHTML = '<p class="sx-muted">Sin cuotas por ahora.</p>'; return;
+      }
+      var deuda = 0, pend = 0;
+      rows.forEach(function (c) {
+        if (c.estado === "pendiente") { deuda += (c.monto || 0); pend++; }
+        var row = document.createElement("div");
+        row.className = "sx-cuota-row";
+        var pagar = (c.estado === "pendiente" && c.link_pago) ? '<a class="sx-doc-open" href="' + esc(c.link_pago) + '" target="_blank" rel="noopener">Pagar</a>' : "";
+        row.innerHTML = '<span class="sx-cuota-per">' + esc(c.periodo) + (c.concepto ? " · " + esc(c.concepto) : "") + "</span>" +
+          '<span class="sx-cuota-monto">' + CLP(c.monto) + "</span>" +
+          '<span class="sx-cuota-estado sx-est-' + esc(c.estado) + '">' + esc(c.estado) + "</span>" + pagar;
+        box.appendChild(row);
+        if (sel) { var op = document.createElement("option"); op.value = c.id; op.textContent = c.periodo + (c.concepto ? " · " + c.concepto : "") + " (" + CLP(c.monto) + ")"; sel.appendChild(op); }
+      });
+      $("#sx-cuotas-estado").innerHTML = pend ? ("Debes <strong>" + CLP(deuda) + "</strong> en " + pend + " cuota(s).") : "Estás al día con tus cuotas. ✓";
+    } catch (e) { $("#sx-cuotas-estado").textContent = "No se pudieron cargar tus cuotas."; }
+  }
+
+  async function loadComprobantes() {
+    try {
+      var r = await rest("/rest/v1/ime_comprobantes?socio_id=eq." + session.userId + "&select=*&order=created_at.desc");
+      var rows = await r.json();
+      var box = $("#sx-comps"); box.innerHTML = "";
+      if (!Array.isArray(rows) || !rows.length) { box.innerHTML = '<p class="sx-muted">Aún no subes comprobantes.</p>'; return; }
+      rows.forEach(function (d) {
+        var row = document.createElement("div"); row.className = "sx-doc-row";
+        row.innerHTML = '<span class="sx-cuota-estado sx-est-' + esc(d.estado) + '">' + esc(d.estado) + "</span>" +
+          '<span class="sx-doc-title">' + (d.fecha ? esc(d.fecha) + " · " : "") + CLP(d.monto) + "</span><button class=\"sx-doc-open\">Ver</button>";
+        row.querySelector(".sx-doc-open").addEventListener("click", async function () { var u = await signedUrl(COMP, d.file_path); if (u) window.open(u, "_blank", "noopener"); });
+        box.appendChild(row);
+      });
+    } catch (e) { /* silencioso */ }
+  }
+
+  var _compInput = $("#sx-comp-file");
+  if (_compInput) _compInput.addEventListener("change", async function (e) {
+    var f = e.target.files && e.target.files[0]; if (!f) return;
+    if (!/^(application\/pdf|image\/(png|jpeg|webp))$/.test(f.type)) { setStatus($("#sx-comp-status"), "Debe ser PDF o imagen.", "err"); return; }
+    if (f.size > 10 * 1024 * 1024) { setStatus($("#sx-comp-status"), "El archivo supera 10 MB.", "err"); return; }
+    setStatus($("#sx-comp-status"), "Subiendo comprobante…", "info");
+    var ext = f.type === "application/pdf" ? "pdf" : f.type === "image/png" ? "png" : f.type === "image/webp" ? "webp" : "jpg";
+    var path = session.userId + "/" + Date.now() + "." + ext;
+    try {
+      var up = await uploadTo(COMP, path, f);
+      if (!up.ok) { setStatus($("#sx-comp-status"), "No se pudo subir.", "err"); return; }
+      var row = { socio_id: session.userId, file_path: path, estado: "enviado" };
+      var cid = $("#sx-comp-cuota").value; if (cid) row.cuota_id = Number(cid);
+      var monto = $("#sx-comp-monto").value; if (monto) row.monto = Number(monto);
+      var fecha = $("#sx-comp-fecha").value; if (fecha) row.fecha = fecha;
+      var res = await rest("/rest/v1/ime_comprobantes", { method: "POST", headers: { apikey: cfg.anonKey, Authorization: "Bearer " + session.token, "Content-Type": "application/json", Prefer: "return=minimal" }, body: JSON.stringify([row]) });
+      if (!res.ok) { setStatus($("#sx-comp-status"), "Subido pero no se registró.", "err"); return; }
+      setStatus($("#sx-comp-status"), "Comprobante enviado. El directorio lo verificará.", "ok");
+      e.target.value = ""; $("#sx-comp-monto").value = ""; $("#sx-comp-fecha").value = "";
+      loadComprobantes();
+    } catch (err) { setStatus($("#sx-comp-status"), "Error al subir el comprobante.", "err"); }
+  });
 
   // Botones triangulares: expandir una columna a pantalla completa.
   // ▶ del público simula la vista de alguien externo; ◀ del privado, la consulta del socix.

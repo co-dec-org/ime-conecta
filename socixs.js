@@ -107,6 +107,7 @@
     loadDocs();
     loadCuotas();
     loadComprobantes();
+    loadPrivado();
   }
 
   $("#sx-signout").addEventListener("click", function () {
@@ -321,6 +322,64 @@
       e.target.value = ""; $("#sx-comp-monto").value = ""; $("#sx-comp-fecha").value = "";
       loadComprobantes();
     } catch (err) { setStatus($("#sx-comp-status"), "Error al subir el comprobante.", "err"); }
+  });
+
+  // ---------- datos privados del socix (RUT, teléfono) ----------
+  async function loadPrivado() {
+    try {
+      var r = await rest("/rest/v1/ime_socios_privado?id=eq." + session.userId + "&select=*");
+      var rows = await r.json();
+      var p = (Array.isArray(rows) && rows[0]) || {};
+      if ($("#sx-rut")) $("#sx-rut").value = p.rut || "";
+      if ($("#sx-tel")) $("#sx-tel").value = p.telefono || "";
+    } catch (e) { /* silencioso */ }
+  }
+  if ($("#sx-priv-save")) $("#sx-priv-save").addEventListener("click", async function () {
+    if (!session) return;
+    setStatus($("#sx-priv-status"), "Guardando…", "info");
+    try {
+      var body = [{ id: session.userId, rut: $("#sx-rut").value.trim() || null, telefono: $("#sx-tel").value.trim() || null, updated_at: new Date().toISOString() }];
+      var res = await rest("/rest/v1/ime_socios_privado?on_conflict=id", {
+        method: "POST",
+        headers: { apikey: cfg.anonKey, Authorization: "Bearer " + session.token, "Content-Type": "application/json", Prefer: "resolution=merge-duplicates" },
+        body: JSON.stringify(body)
+      });
+      setStatus($("#sx-priv-status"), res.ok ? "Datos guardados." : "No se pudo guardar.", res.ok ? "ok" : "err");
+    } catch (e) { setStatus($("#sx-priv-status"), "Error al guardar.", "err"); }
+  });
+
+  // ---------- notas del área de socix (panel propio, misma base) ----------
+  var noteToggle = $("#sx-notes-toggle"), notePanel = $("#sx-notes");
+  var NOTE_SECTION = "socixs";
+  function openNotes(open) {
+    if (!notePanel) return;
+    notePanel.hidden = !open;
+    if (noteToggle) noteToggle.setAttribute("aria-expanded", String(open));
+    if (open) loadNote();
+  }
+  if (noteToggle) noteToggle.addEventListener("click", function () { openNotes(notePanel.hidden); });
+  if ($("#sx-notes-close")) $("#sx-notes-close").addEventListener("click", function () { openNotes(false); });
+  if ($("#sx-note-clear")) $("#sx-note-clear").addEventListener("click", function () { $("#sx-note-text").value = ""; setStatus($("#sx-note-status"), "", ""); });
+  async function loadNote() {
+    if (!session) { setStatus($("#sx-note-status"), "Inicia sesión para dejar tu nota.", "info"); return; }
+    try {
+      var r = await rest("/rest/v1/ime_section_notes?app_key=eq." + encodeURIComponent(cfg.appKey) + "&section_id=eq." + NOTE_SECTION + "&user_id=eq." + session.userId + "&select=note_text");
+      var rows = await r.json();
+      $("#sx-note-text").value = (Array.isArray(rows) && rows[0] && rows[0].note_text) || "";
+    } catch (e) { /* silencioso */ }
+  }
+  if ($("#sx-note-send")) $("#sx-note-send").addEventListener("click", async function () {
+    if (!session) { setStatus($("#sx-note-status"), "Inicia sesión para dejar tu nota.", "err"); return; }
+    setStatus($("#sx-note-status"), "Enviando…", "info");
+    try {
+      var body = [{ app_key: cfg.appKey, section_id: NOTE_SECTION, user_id: session.userId, note_text: $("#sx-note-text").value.trim(), author_email: session.email, author_name: session.name, updated_at: new Date().toISOString() }];
+      var res = await rest("/rest/v1/ime_section_notes?on_conflict=app_key,section_id,user_id", {
+        method: "POST",
+        headers: { apikey: cfg.anonKey, Authorization: "Bearer " + session.token, "Content-Type": "application/json", Prefer: "resolution=merge-duplicates" },
+        body: JSON.stringify(body)
+      });
+      setStatus($("#sx-note-status"), res.ok ? "Nota enviada." : "No se pudo enviar.", res.ok ? "ok" : "err");
+    } catch (e) { setStatus($("#sx-note-status"), "Error al enviar.", "err"); }
   });
 
   // Botones triangulares: expandir una columna a pantalla completa.

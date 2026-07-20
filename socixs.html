@@ -23,10 +23,9 @@
     .sx-tag { font-size: .62rem; text-transform: uppercase; letter-spacing: .08em; padding: 3px 8px; border-radius: 999px; margin-left: 8px; font-weight: 700; white-space: nowrap; }
     .sx-tag-pub { background: color-mix(in srgb, #34d399 20%, transparent); color: #6ee7b7; border: 1px solid color-mix(in srgb, #34d399 45%, transparent); }
     .sx-tag-priv { background: color-mix(in srgb, var(--accent, #c084fc) 22%, transparent); color: #e9d5ff; border: 1px solid color-mix(in srgb, var(--accent, #c084fc) 45%, transparent); }
-    .sx-colbar { display: flex; margin: 0 0 8px; }
-    .sx-colbar-pub { justify-content: flex-end; }
-    .sx-colbar-priv { justify-content: flex-start; }
-    .sx-coltoggle { background: color-mix(in srgb, var(--surface, #1b1726) 82%, transparent); border: 1px solid var(--line); color: var(--accent, #c084fc); width: 42px; height: 26px; border-radius: 8px; cursor: pointer; font-size: 11px; display: inline-flex; align-items: center; justify-content: center; }
+    .sx-cardhead { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: 0 0 14px; }
+    .sx-cardhead h2 { margin: 0; }
+    .sx-coltoggle { flex: none; background: color-mix(in srgb, var(--surface, #1b1726) 82%, transparent); border: 1px solid var(--line); color: var(--accent, #c084fc); width: 42px; height: 26px; border-radius: 8px; cursor: pointer; font-size: 11px; display: inline-flex; align-items: center; justify-content: center; }
     .sx-coltoggle:hover { border-color: var(--accent, #c084fc); }
     .sx-grid[data-view="pub"] { grid-template-columns: 1fr; }
     .sx-grid[data-view="pub"] .sx-col-priv { display: none; }
@@ -100,9 +99,11 @@
 
         <!-- Columna PÚBLICA: perfil artístico -->
         <div class="sx-col sx-col-pub">
-          <div class="sx-colbar sx-colbar-pub"><button class="sx-coltoggle" id="sx-toggle-pub" aria-label="Expandir perfil público">▶</button></div>
           <section class="sx-card" aria-label="Perfil artístico">
-            <h2>Perfil artístico <span class="sx-tag sx-tag-pub">Público</span></h2>
+            <div class="sx-cardhead">
+              <h2>Perfil artístico <span class="sx-tag sx-tag-pub">Público</span></h2>
+              <button class="sx-coltoggle" id="sx-toggle-pub" aria-label="Expandir perfil público">▶</button>
+            </div>
             <p class="sx-hint">Visible en el directorio de artistas de IME.</p>
             <div class="sx-photo-box">
               <img id="sx-photo" alt="Foto de perfil" hidden />
@@ -144,9 +145,11 @@
 
         <!-- Columna PRIVADA: perfil de socix -->
         <div class="sx-col sx-col-priv">
-          <div class="sx-colbar sx-colbar-priv"><button class="sx-coltoggle" id="sx-toggle-priv" aria-label="Expandir perfil de socix">◀</button></div>
           <section class="sx-card" aria-label="Perfil de socix">
-            <h2>Perfil de socix <span class="sx-tag sx-tag-priv">Privado</span></h2>
+            <div class="sx-cardhead">
+              <h2>Perfil de socix <span class="sx-tag sx-tag-priv">Privado</span></h2>
+              <button class="sx-coltoggle" id="sx-toggle-priv" aria-label="Expandir perfil de socix">◀</button>
+            </div>
             <p class="sx-hint">Datos de tu registro en IME. Solo los ves tú y el directorio.</p>
             <label class="sx-field"><span>Nombre completo</span><input id="sx-reg-name" class="sx-in" type="text" readonly /></label>
             <label class="sx-field"><span>Correo</span><input id="sx-reg-email" class="sx-in" type="email" readonly /></label>

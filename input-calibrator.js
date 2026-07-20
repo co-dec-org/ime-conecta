@@ -158,13 +158,14 @@
   const currentRow = panel.querySelector(`.calib-presets div[data-slot="${klass}"]`);
   if (currentRow) currentRow.setAttribute("data-current", "1");
 
-  // Visibilidad restringida: el calibrador solo aparece para el director co.dec.org.
-  // La sesión (token) se usa para publicar sets en Supabase.
+  // Visibilidad restringida: el calibrador solo aparece para el rol "admin" del
+  // padrón (ime_directors). Sin correos personales en el cliente (Ley 21.719).
+  // La sesión (token) se usa para publicar sets en Supabase; la seguridad real es RLS.
   const auth = { token: null, userId: null };
   toggle.style.display = "none";
   window.addEventListener("ime:auth", e => {
     const d = (e && e.detail) || {};
-    const allowed = d.email === "co.dec.org@gmail.com";
+    const allowed = d.role === "admin";
     auth.token = (allowed && d.token) || null;
     auth.userId = (allowed && d.userId) || null;
     toggle.style.display = allowed ? "" : "none";

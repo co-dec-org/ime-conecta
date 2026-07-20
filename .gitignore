@@ -17,3 +17,4 @@ work/*.html
 # Temporales de sistema / LibreOffice
 *.tmp
 .~lock.*#
+.env*

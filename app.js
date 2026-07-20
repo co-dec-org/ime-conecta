@@ -311,12 +311,12 @@
       session.mustChange = !!(data.user && data.user.user_metadata && data.user.user_metadata.must_change_password);
       // Validar perfil de director activo.
       const padron = (cfg.tables && cfg.tables.directors) || "ime_directors";
-      const prof = await rest(`/rest/v1/${padron}?id=eq.${session.userId}&active=eq.true&select=full_name`, {});
+      const prof = await rest(`/rest/v1/${padron}?id=eq.${session.userId}&active=eq.true&select=full_name,role`, {});
       const rows = await prof.json();
       if (!rows.length) { session = null; setStatus(status, "Tu cuenta no está habilitada en el padrón de IME Conecta.", "err"); return; }
       session.name = rows[0].full_name || email;
       session.email = email;
-      window.dispatchEvent(new CustomEvent("ime:auth", { detail: { email, token: session.token, userId: session.userId } }));
+      window.dispatchEvent(new CustomEvent("ime:auth", { detail: { email, role: (rows[0] && rows[0].role) || null, token: session.token, userId: session.userId } }));
       enterEditor();
     } catch (e) { setStatus(status, "Error de conexión con Supabase.", "err"); }
   });

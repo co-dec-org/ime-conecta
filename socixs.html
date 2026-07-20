@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>IME Conecta · Socixs</title>
+  <meta name="description" content="Área de socixs de IME Chile A.G.: perfil de artista, documentos y estado de cuotas." />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="theme-color" content="#12101a" />
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <link rel="icon" type="image/png" href="assets/logo-ime-black.png" />
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://nldxjciamqvoppvvclfi.supabase.co" crossorigin />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Playfair+Display:wght@700;800&family=Poppins:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .sx-wrap { max-width: 860px; margin: 0 auto; padding: 90px 20px 80px; }
+    .sx-top { position: fixed; top: 0; left: 0; right: 0; z-index: 30; display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 20px; backdrop-filter: blur(10px); background: color-mix(in srgb, var(--bg, #12101a) 70%, transparent); border-bottom: 1px solid var(--line); }
+    .sx-brand { font-weight: 700; letter-spacing: .02em; }
+    .sx-brand small { color: var(--accent, #c084fc); font-weight: 600; }
+    .sx-top a, .sx-top button { color: var(--text); text-decoration: none; font: inherit; background: transparent; border: 1px solid var(--line); border-radius: 999px; padding: 7px 14px; cursor: pointer; }
+    .sx-card { background: color-mix(in srgb, var(--surface, #1b1726) 82%, transparent); border: 1px solid var(--line); border-radius: 16px; padding: 22px; margin: 0 0 18px; }
+    .sx-card h1 { font-family: "Playfair Display", serif; font-size: 2rem; margin: 0 0 4px; }
+    .sx-card h2 { font-size: 1.15rem; margin: 0 0 14px; color: var(--accent, #c084fc); }
+    .sx-field { display: block; margin: 0 0 12px; }
+    .sx-field span { display: block; font-size: .85rem; color: var(--text-dim); margin: 0 0 5px; }
+    .sx-in, .sx-ta, .sx-sel { width: 100%; box-sizing: border-box; background: rgba(255,255,255,.04); border: 1px solid var(--line); border-radius: 10px; color: var(--text); font: inherit; padding: 10px 12px; }
+    .sx-ta { min-height: 90px; resize: vertical; }
+    .sx-btn { background: linear-gradient(120deg, #c084fc, #e879f9); color: #2a0a3a; border: none; border-radius: 999px; padding: 10px 20px; font-weight: 600; cursor: pointer; }
+    .sx-btn.ghost { background: transparent; color: var(--text); border: 1px solid var(--line); }
+    .sx-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+    .sx-status { min-height: 1.2em; font-size: .9rem; margin: 8px 0 0; }
+    .sx-muted { color: var(--text-dim); font-size: .9rem; }
+    .sx-photo-box { display: flex; gap: 16px; align-items: center; margin: 0 0 14px; }
+    #sx-photo { width: 96px; height: 96px; border-radius: 50%; object-fit: cover; border: 2px solid var(--accent, #c084fc); }
+    #sx-photo-empty { width: 96px; height: 96px; border-radius: 50%; border: 2px dashed var(--line); display: grid; place-items: center; color: var(--text-dim); font-size: .8rem; text-align: center; }
+    .sx-link-row, .sx-doc-row { display: flex; gap: 8px; align-items: center; margin: 0 0 8px; }
+    .sx-link-row .sx-in { flex: 1; }
+    .sx-doc-row { border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; }
+    .sx-doc-kind { font-size: .7rem; text-transform: uppercase; letter-spacing: .06em; color: var(--accent, #c084fc); border: 1px solid var(--line); border-radius: 6px; padding: 2px 6px; }
+    .sx-doc-title { flex: 1; }
+    .sx-doc-open { background: transparent; border: 1px solid var(--line); color: var(--text); border-radius: 8px; padding: 5px 10px; cursor: pointer; }
+    .sx-x { background: transparent; border: 1px solid var(--line); color: var(--text-dim); border-radius: 8px; padding: 5px 9px; cursor: pointer; }
+    .sx-hint { font-size: .82rem; color: var(--text-dim); }
+    .sx-soon { opacity: .55; }
+  </style>
+</head>
+<body>
+  <canvas id="ime-skin" aria-hidden="true"></canvas>
+
+  <div class="sx-top">
+    <span class="sx-brand">IME&nbsp;Conecta <small>· Socixs</small></span>
+    <span class="sx-row">
+      <a href="index.html">← Volver</a>
+      <a id="sx-panel-link" href="#" hidden>Panel directorio</a>
+      <button id="sx-signout" hidden>Salir</button>
+    </span>
+  </div>
+
+  <div class="sx-wrap">
+
+    <!-- Login -->
+    <section id="sx-login" class="sx-card" aria-label="Ingreso de socixs">
+      <h1>Área de socixs</h1>
+      <p class="sx-muted">Ingresa con el correo y la contraseña que te envió el directorio. En tu primer ingreso podrás cambiar la contraseña temporal.</p>
+      <label class="sx-field"><span>Correo</span><input id="sx-email" class="sx-in" type="email" autocomplete="username" placeholder="nombre@correo.com" /></label>
+      <label class="sx-field"><span>Contraseña</span><input id="sx-pass" class="sx-in" type="password" autocomplete="current-password" placeholder="••••••••" /></label>
+      <button id="sx-signin" class="sx-btn">Ingresar</button>
+      <p id="sx-login-status" class="sx-status"></p>
+    </section>
+
+    <!-- App (tras login) -->
+    <div id="sx-app" hidden>
+      <p class="sx-muted">Sesión de <strong id="sx-who"></strong>.</p>
+
+      <!-- Perfil de artista -->
+      <section class="sx-card" aria-label="Perfil de artista">
+        <h2>Perfil de artista</h2>
+        <div class="sx-photo-box">
+          <img id="sx-photo" alt="Foto de perfil" hidden />
+          <div id="sx-photo-empty">Sin foto</div>
+          <label class="sx-btn ghost" style="cursor:pointer">Subir foto
+            <input id="sx-photo-file" type="file" accept="image/png,image/jpeg,image/webp" hidden />
+          </label>
+        </div>
+        <label class="sx-field"><span>Nombre artístico</span><input id="sx-artist" class="sx-in" type="text" placeholder="Tu nombre de artista" /></label>
+        <label class="sx-field"><span>Bio breve</span><textarea id="sx-bio" class="sx-ta" placeholder="Una breve descripción de tu trabajo…"></textarea></label>
+
+        <span class="sx-field"><span>Links de tu arte</span></span>
+        <div id="sx-links"></div>
+        <button id="sx-add-link" class="sx-btn ghost">+ Agregar link</button>
+
+        <div class="sx-row" style="margin-top:16px">
+          <button id="sx-save" class="sx-btn">Guardar perfil</button>
+          <span id="sx-profile-status" class="sx-status"></span>
+        </div>
+      </section>
+
+      <!-- Documentos -->
+      <section class="sx-card" aria-label="Documentos">
+        <h2>Documentos</h2>
+        <p class="sx-hint">Sube tu onesheet, dossier u otros PDF (máx. 10 MB).</p>
+        <div class="sx-row" style="margin:8px 0 12px">
+          <select id="sx-doc-kind" class="sx-sel" style="width:auto">
+            <option value="onesheet">Onesheet</option>
+            <option value="dossier">Dossier</option>
+            <option value="otro">Otro</option>
+          </select>
+          <label class="sx-btn ghost" style="cursor:pointer">Subir PDF
+            <input id="sx-doc-file" type="file" accept="application/pdf" hidden />
+          </label>
+          <span id="sx-docs-status" class="sx-status"></span>
+        </div>
+        <div id="sx-docs"></div>
+      </section>
+
+      <!-- Cuotas (próxima etapa) -->
+      <section class="sx-card sx-soon" aria-label="Cuotas">
+        <h2>Cuotas y comprobantes</h2>
+        <p class="sx-muted">Próximamente: tu estado y historial de cuotas, subir comprobantes y link de pago.</p>
+      </section>
+    </div>
+
+  </div>
+
+  <script src="supabase-config.js"></script>
+  <script src="ime-skin.js"></script>
+  <script src="socixs.js"></script>
+</body>
+</html>

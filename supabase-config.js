@@ -19,16 +19,7 @@ window.IME_SUPABASE = {
   appKey: "ime-conecta",
 
   // Tablas compartidas del modelo de datos unificado.
-  tables: { directors: "ime_directors", notes: "ime_section_notes" },
-
-  // Mapa alias -> correo (solo correos públicos; sin contraseñas).
-  directors: {
-    "co-dec":  "co.dec.org@gmail.com",
-    "teko":    "tekopamies@gmail.com",
-    "max":     "max.johnson.la@gmail.com",
-    "javier":  "jgonzaler@uc.cl",
-    "josefa":  "mujicajf1@gmail.com",
-    "ignacia": "ignacia.munoz@mail.udp.cl",
-    "fran":    "franbakovic@gmail.com"
-  }
+  // El padrón de directores vive solo en la tabla ime_directors (con RLS).
+  // No se listan correos personales en el cliente público (Ley 21.719: minimización).
+  tables: { directors: "ime_directors", notes: "ime_section_notes" }
 };

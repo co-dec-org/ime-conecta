@@ -466,3 +466,7 @@ body, .card, .factbox, .search-panel, .notes-panel, .calib-panel, .sidenav li a,
 
 /* H5: espacio inferior para que el botón flotante no tape el texto */
 .footer { padding-bottom: 96px; }
+
+/* Botón de acceso al área de Socixs (CTA en el header) */
+.hbtn-cta{background:linear-gradient(120deg,#c084fc,#e879f9);color:#2a0a3a;border-color:transparent;font-weight:600;text-decoration:none;display:inline-flex;align-items:center}
+.hbtn-cta:hover{filter:brightness(1.05)}

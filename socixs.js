@@ -253,6 +253,25 @@
     } catch (e) { /* silencioso */ }
   }
 
+  // Botones triangulares: expandir una columna a pantalla completa.
+  // ▶ del público simula la vista de alguien externo; ◀ del privado, la consulta del socix.
+  (function columnToggles() {
+    var grid = document.querySelector(".sx-grid");
+    var tp = document.querySelector("#sx-toggle-pub");
+    var tv = document.querySelector("#sx-toggle-priv");
+    if (!grid || !tp || !tv) return;
+    function setView(v) {
+      grid.setAttribute("data-view", v);
+      tp.textContent = v === "pub" ? "◀" : "▶";
+      tp.title = v === "pub" ? "Volver a dos columnas" : "Ver a pantalla completa (como público)";
+      tv.textContent = v === "priv" ? "▶" : "◀";
+      tv.title = v === "priv" ? "Volver a dos columnas" : "Ver tu perfil de socix a pantalla completa";
+    }
+    tp.addEventListener("click", function () { setView(grid.getAttribute("data-view") === "pub" ? "both" : "pub"); });
+    tv.addEventListener("click", function () { setView(grid.getAttribute("data-view") === "priv" ? "both" : "priv"); });
+    setView("both");
+  })();
+
   // Sesión compartida (Notas ↔ Socixs): si ya hay sesión válida, entrar directo.
   (function restoreSession() {
     var s = window.IMEAuth && IMEAuth.load();

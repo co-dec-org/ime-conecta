@@ -23,7 +23,16 @@
     .sx-tag { font-size: .62rem; text-transform: uppercase; letter-spacing: .08em; padding: 3px 8px; border-radius: 999px; margin-left: 8px; font-weight: 700; white-space: nowrap; }
     .sx-tag-pub { background: color-mix(in srgb, #34d399 20%, transparent); color: #6ee7b7; border: 1px solid color-mix(in srgb, #34d399 45%, transparent); }
     .sx-tag-priv { background: color-mix(in srgb, var(--accent, #c084fc) 22%, transparent); color: #e9d5ff; border: 1px solid color-mix(in srgb, var(--accent, #c084fc) 45%, transparent); }
-    @media (max-width: 760px) { .sx-grid { grid-template-columns: 1fr; } }
+    .sx-colbar { display: flex; margin: 0 0 8px; }
+    .sx-colbar-pub { justify-content: flex-end; }
+    .sx-colbar-priv { justify-content: flex-start; }
+    .sx-coltoggle { background: color-mix(in srgb, var(--surface, #1b1726) 82%, transparent); border: 1px solid var(--line); color: var(--accent, #c084fc); width: 42px; height: 26px; border-radius: 8px; cursor: pointer; font-size: 11px; display: inline-flex; align-items: center; justify-content: center; }
+    .sx-coltoggle:hover { border-color: var(--accent, #c084fc); }
+    .sx-grid[data-view="pub"] { grid-template-columns: 1fr; }
+    .sx-grid[data-view="pub"] .sx-col-priv { display: none; }
+    .sx-grid[data-view="priv"] { grid-template-columns: 1fr; }
+    .sx-grid[data-view="priv"] .sx-col-pub { display: none; }
+    @media (max-width: 760px) { .sx-grid { grid-template-columns: 1fr; } .sx-colbar { display: none; } }
     .sx-card { background: color-mix(in srgb, var(--surface, #1b1726) 82%, transparent); border: 1px solid var(--line); border-radius: 16px; padding: 22px; margin: 0 0 18px; }
     .sx-card h1 { font-family: "Playfair Display", serif; font-size: 2rem; margin: 0 0 4px; }
     .sx-card h2 { font-size: 1.15rem; margin: 0 0 14px; color: var(--accent, #c084fc); }
@@ -90,7 +99,8 @@
       <div class="sx-grid">
 
         <!-- Columna PÚBLICA: perfil artístico -->
-        <div class="sx-col">
+        <div class="sx-col sx-col-pub">
+          <div class="sx-colbar sx-colbar-pub"><button class="sx-coltoggle" id="sx-toggle-pub" aria-label="Expandir perfil público">▶</button></div>
           <section class="sx-card" aria-label="Perfil artístico">
             <h2>Perfil artístico <span class="sx-tag sx-tag-pub">Público</span></h2>
             <p class="sx-hint">Visible en el directorio de artistas de IME.</p>
@@ -133,7 +143,8 @@
         </div>
 
         <!-- Columna PRIVADA: perfil de socix -->
-        <div class="sx-col">
+        <div class="sx-col sx-col-priv">
+          <div class="sx-colbar sx-colbar-priv"><button class="sx-coltoggle" id="sx-toggle-priv" aria-label="Expandir perfil de socix">◀</button></div>
           <section class="sx-card" aria-label="Perfil de socix">
             <h2>Perfil de socix <span class="sx-tag sx-tag-priv">Privado</span></h2>
             <p class="sx-hint">Datos de tu registro en IME. Solo los ves tú y el directorio.</p>

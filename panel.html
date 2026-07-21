@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>IME Conecta · Panel directorio</title>
+  <meta name="description" content="Panel del directorio de IME Chile A.G.: estado de socixs, cuotas y comprobantes." />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="theme-color" content="#12101a" />
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <link rel="icon" type="image/png" href="assets/logo-ime-black.png" />
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://nldxjciamqvoppvvclfi.supabase.co" crossorigin />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Playfair+Display:wght@700;800&family=Poppins:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .pn-wrap { max-width: 1120px; margin: 0 auto; padding: 90px 20px 80px; position: relative; z-index: 1; }
+    .pn-card { background: color-mix(in srgb, var(--surface, #1b1726) 82%, transparent); border: 1px solid var(--line); border-radius: 16px; padding: 20px; margin: 0 0 18px; }
+    .pn-card h1 { font-family: "Playfair Display", serif; font-size: 2rem; margin: 0 0 4px; }
+    .pn-card h2 { font-size: 1.15rem; margin: 0 0 12px; color: var(--accent, #c084fc); }
+    .pn-muted { color: var(--text-dim); font-size: .9rem; }
+    .pn-field { display: block; margin: 0 0 12px; }
+    .pn-field span { display: block; font-size: .85rem; color: var(--text-dim); margin: 0 0 5px; }
+    .pn-in, .pn-sel { width: 100%; box-sizing: border-box; background: rgba(255,255,255,.04); border: 1px solid var(--line); border-radius: 10px; color: var(--text); font: inherit; padding: 10px 12px; }
+    .pn-btn { background: linear-gradient(120deg, #c084fc, #e879f9); color: #2a0a3a; border: none; border-radius: 999px; padding: 9px 18px; font-weight: 600; cursor: pointer; }
+    .pn-btn.ghost { background: transparent; color: var(--text); border: 1px solid var(--line); }
+    .pn-btn.ok { background: linear-gradient(120deg, #34d399, #10b981); color: #04231a; }
+    .pn-btn.no { background: transparent; color: #f6788a; border: 1px solid color-mix(in srgb, #f6788a 45%, transparent); }
+    .pn-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+    .pn-status { min-height: 1.2em; font-size: .9rem; }
+    .pn-kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
+    .pn-kpi { background: rgba(255,255,255,.03); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
+    .pn-kpi b { display: block; font-size: 1.6rem; font-weight: 700; }
+    .pn-kpi span { font-size: .8rem; color: var(--text-dim); }
+    .pn-table-wrap { overflow-x: auto; }
+    table.pn-table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+    .pn-table th { text-align: left; color: var(--accent, #c084fc); font-weight: 600; padding: 8px 10px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+    .pn-table td { padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+    .pn-badge { font-size: .66rem; text-transform: uppercase; letter-spacing: .05em; padding: 2px 7px; border-radius: 999px; border: 1px solid var(--line); white-space: nowrap; }
+    .pn-al-dia { color: #6ee7b7; border-color: color-mix(in srgb, #34d399 45%, transparent); }
+    .pn-debe { color: #fbbf24; border-color: color-mix(in srgb, #fbbf24 45%, transparent); }
+    .pn-comp-open { background: transparent; border: 1px solid var(--line); color: var(--text); border-radius: 8px; padding: 4px 10px; cursor: pointer; }
+    #pn-login { max-width: 520px; }
+  </style>
+</head>
+<body>
+  <canvas id="ime-skin" aria-hidden="true"></canvas>
+
+  <header class="header" role="banner">
+    <a class="brand" href="index.html" aria-label="IME Conecta — inicio">
+      <svg class="brand-logo" viewBox="0 0 624.45 738.57" role="img" aria-label="IME" xmlns="http://www.w3.org/2000/svg">
+        <g fill="currentColor">
+          <rect x="1.86" width="119.69" height="263.51"/>
+          <polygon points="318.25 738.57 0 738.57 1.86 471.35 312.69 471.35 312.69 536.3 121.55 536.3 121.55 577.12 273.71 577.12 273.71 637.43 117.84 637.43 117.84 672.69 318.25 672.69 318.25 738.57"/>
+          <polygon points="624.45 459.29 514.96 459.29 514.96 291.35 431.45 452.79 329.39 452.79 246.81 283.51 246.81 451.86 142.89 452.79 142.89 184.64 311.76 184.64 386.91 348.87 464.85 184.64 624.45 184.64 624.45 459.29"/>
+        </g>
+      </svg>
+      <span class="brand-name">Conecta&nbsp;· Panel</span>
+    </a>
+    <nav class="header-actions" aria-label="Acciones">
+      <a class="hbtn" href="socixs.html">Área socix</a>
+      <button id="pn-signout" class="hbtn" hidden>Salir</button>
+    </nav>
+  </header>
+
+  <div class="pn-wrap">
+
+    <!-- Login (directorio) -->
+    <section id="pn-login" class="pn-card">
+      <h1>Panel del directorio</h1>
+      <p class="pn-muted">Acceso reservado al directorio de IME Chile A.G.</p>
+      <label class="pn-field"><span>Correo</span><input id="pn-email" class="pn-in" type="email" autocomplete="username" placeholder="nombre@correo.com" /></label>
+      <label class="pn-field"><span>Contraseña</span><input id="pn-pass" class="pn-in" type="password" autocomplete="current-password" placeholder="••••••••" /></label>
+      <button id="pn-signin" class="pn-btn">Ingresar</button>
+      <p id="pn-login-status" class="pn-status"></p>
+    </section>
+
+    <!-- Sin permiso -->
+    <section id="pn-deny" class="pn-card" hidden>
+      <h1>Acceso restringido</h1>
+      <p class="pn-muted">Tu cuenta no forma parte del directorio. Si crees que es un error, avisa a la administración.</p>
+      <a class="pn-btn ghost" href="socixs.html">Ir al área de socix</a>
+    </section>
+
+    <!-- Panel -->
+    <div id="pn-app" hidden>
+      <p class="pn-muted">Directorio · <strong id="pn-who"></strong></p>
+
+      <section class="pn-card" aria-label="Indicadores">
+        <h2>Estado general</h2>
+        <div class="pn-kpis" id="pn-kpis"></div>
+      </section>
+
+      <section class="pn-card" aria-label="Comprobantes pendientes">
+        <h2>Comprobantes por verificar</h2>
+        <div id="pn-comps"></div>
+      </section>
+
+      <section class="pn-card" aria-label="Socixs">
+        <h2>Socixs y cuotas</h2>
+        <div class="pn-table-wrap"><table class="pn-table" id="pn-socixs"><thead><tr><th>Socix</th><th>Correo</th><th>Estado</th><th>Deuda</th></tr></thead><tbody></tbody></table></div>
+      </section>
+
+      <section class="pn-card" aria-label="Crear cuota">
+        <h2>Crear cuota</h2>
+        <div class="pn-row">
+          <select id="pn-cuota-socio" class="pn-sel" style="width:auto"><option value="">Socix…</option><option value="__all__">— Todxs lxs socixs activxs —</option></select>
+          <input id="pn-cuota-periodo" class="pn-in" style="width:120px" placeholder="Período (2026)" />
+          <input id="pn-cuota-concepto" class="pn-in" style="width:160px" placeholder="Concepto" />
+          <input id="pn-cuota-monto" class="pn-in" type="number" style="width:120px" placeholder="Monto $" />
+          <input id="pn-cuota-vence" class="pn-in" type="date" style="width:auto" />
+          <input id="pn-cuota-link" class="pn-in" style="width:200px" placeholder="Link de pago (opcional)" />
+          <button id="pn-cuota-crear" class="pn-btn">Crear</button>
+          <span id="pn-cuota-status" class="pn-status"></span>
+        </div>
+      </section>
+    </div>
+
+  </div>
+
+  <script src="supabase-config.js"></script>
+  <script src="ime-auth.js"></script>
+  <script src="ime-skin.js"></script>
+  <script src="panel.js"></script>
+</body>
+</html>

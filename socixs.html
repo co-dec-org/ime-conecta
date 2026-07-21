@@ -16,6 +16,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Playfair+Display:wght@700;800&family=Poppins:wght@400;500&display=swap" />
   <link rel="stylesheet" href="styles.css" />
   <style>
+    html.sx-light { --bg: #eee9fb; --surface: #ffffff; --line: rgba(30,20,50,.14); --text: #201735; --text-dim: #6a6280; }
     .sx-wrap { max-width: 1040px; margin: 0 auto; padding: 90px 20px 80px; position: relative; z-index: 1; }
     #sx-login { max-width: 560px; }
     .sx-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; align-items: start; }
@@ -45,7 +46,7 @@
     .sx-card h2 { font-size: 1.15rem; margin: 0 0 14px; color: var(--accent, #c084fc); }
     .sx-field { display: block; margin: 0 0 12px; }
     .sx-field span { display: block; font-size: .85rem; color: var(--text-dim); margin: 0 0 5px; }
-    .sx-in, .sx-ta, .sx-sel { width: 100%; box-sizing: border-box; background: rgba(255,255,255,.04); border: 1px solid var(--line); border-radius: 10px; color: var(--text); font: inherit; padding: 10px 12px; }
+    .sx-in, .sx-ta, .sx-sel { width: 100%; box-sizing: border-box; background: color-mix(in srgb, var(--text) 6%, transparent); border: 1px solid var(--line); border-radius: 10px; color: var(--text); font: inherit; padding: 10px 12px; }
     .sx-ta { min-height: 90px; resize: vertical; }
     .sx-btn { background: linear-gradient(120deg, #c084fc, #e879f9); color: #2a0a3a; border: none; border-radius: 999px; padding: 10px 20px; font-weight: 600; cursor: pointer; }
     .sx-btn.ghost { background: transparent; color: var(--text); border: 1px solid var(--line); }
@@ -91,9 +92,10 @@
       <span class="brand-name">Conecta&nbsp;· Socixs</span>
     </a>
     <nav class="header-actions" aria-label="Acciones">
-      <a class="hbtn" href="index.html">← Volver</a>
+      <a class="hbtn" href="index.html">← Volver a Conecta</a>
+      <button id="sx-theme" class="hbtn" aria-pressed="false">Tema</button>
       <a id="sx-panel-link" class="hbtn" href="panel.html" hidden>Panel directorio</a>
-      <button id="sx-signout" class="hbtn" hidden>Salir</button>
+      <button id="sx-signout" class="hbtn" hidden>Cerrar sesión</button>
     </nav>
   </header>
 

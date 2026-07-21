@@ -94,14 +94,25 @@
     } catch (e) { setStatus($("#sx-login-status"), "Error de conexión con Supabase.", "err"); }
   });
 
+  // Refleja el estado de sesión en toda la UI (evita quedar "aparentemente logueado").
+  function setLoggedUI(on) {
+    var dir = on && session && session.isDirector, el;
+    if ((el = $("#sx-signout"))) el.hidden = !on;
+    if ((el = $("#sx-panel-link"))) el.hidden = !dir;
+    if ((el = $("#sx-app"))) el.hidden = !on;
+    if ((el = $("#sx-login"))) el.hidden = on;
+    if (!on) { // cerró sesión: cierra y limpia Notas, pide login
+      if ((el = $("#sx-notes"))) el.hidden = true;
+      if ((el = $("#sx-notes-toggle"))) el.setAttribute("aria-expanded", "false");
+      if ((el = $("#sx-note-text"))) el.value = "";
+      setStatus($("#sx-note-status"), "", "");
+    }
+  }
   function enterApp() {
-    $("#sx-login").hidden = true;
-    $("#sx-app").hidden = false;
+    setLoggedUI(true);
     $("#sx-who").textContent = session.name;
     var _rn = $("#sx-reg-name"); if (_rn) _rn.value = session.name || "";
     var _re = $("#sx-reg-email"); if (_re) _re.value = session.email || "";
-    $("#sx-panel-link").hidden = !session.isDirector;
-    $("#sx-signout").hidden = false;
     if (session.mustChange) setStatus($("#sx-profile-status"), "Por seguridad, cambia tu contraseña temporal en “Cuenta”.", "info");
     loadProfile();
     loadDocs();
@@ -113,10 +124,7 @@
   $("#sx-signout").addEventListener("click", function () {
     session = null;
     if (window.IMEAuth) IMEAuth.clear();
-    $("#sx-app").hidden = true;
-    $("#sx-login").hidden = false;
-    $("#sx-signout").hidden = true;
-    $("#sx-panel-link").hidden = true;
+    setLoggedUI(false);
     $("#sx-pass").value = "";
   });
 
@@ -421,10 +429,23 @@
     setView("both");
   })();
 
-  // Sesión compartida (Notas ↔ Socixs): si ya hay sesión válida, entrar directo.
+  // Tema claro/oscuro (persistente).
+  (function themeToggle() {
+    var btn = $("#sx-theme");
+    function apply(light) {
+      document.documentElement.classList.toggle("sx-light", light);
+      if (btn) btn.setAttribute("aria-pressed", String(light));
+      try { localStorage.setItem("sx-theme", light ? "light" : "dark"); } catch (e) {}
+    }
+    if (btn) btn.addEventListener("click", function () { apply(!document.documentElement.classList.contains("sx-light")); });
+    var saved = "dark"; try { saved = localStorage.getItem("sx-theme") || "dark"; } catch (e) {}
+    apply(saved === "light");
+  })();
+
+  // Sesión compartida (Notas ↔ Socixs): si ya hay sesión válida, entrar directo; si no, estado logout.
   (function restoreSession() {
     var s = window.IMEAuth && IMEAuth.load();
-    if (!s) return;
+    if (!s) { setLoggedUI(false); return; }
     session = { token: s.token, userId: s.userId, email: s.email, name: s.name || s.email, role: s.role || null, isDirector: !!s.role, mustChange: !!s.mustChange };
     enterApp();
   })();

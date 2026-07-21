@@ -346,10 +346,27 @@
       if ($("#sx-tel")) $("#sx-tel").value = p.telefono || "";
     } catch (e) { /* silencioso */ }
   }
+  // ---------- RUT: dato madre del padrón (normaliza, formatea y valida módulo 11) ----------
+  function normRut(v) { return String(v || "").replace(/[^0-9kK]/g, "").toUpperCase(); }
+  function formatRut(v) { var r = normRut(v); return r.length < 2 ? r : r.slice(0, -1) + "-" + r.slice(-1); }
+  function rutValido(v) {
+    var r = normRut(v);
+    if (r.length < 8 || r.length > 9) return false;
+    var cuerpo = r.slice(0, -1), dv = r.slice(-1);
+    if (!/^[0-9]+$/.test(cuerpo)) return false;
+    var suma = 0, mul = 2;
+    for (var i = cuerpo.length - 1; i >= 0; i--) { suma += parseInt(cuerpo.charAt(i), 10) * mul; mul = mul === 7 ? 2 : mul + 1; }
+    var res = 11 - (suma % 11);
+    var dvCalc = res === 11 ? "0" : res === 10 ? "K" : String(res);
+    return dv === dvCalc;
+  }
+
   if ($("#sx-priv-save")) $("#sx-priv-save").addEventListener("click", async function () {
     if (!session) return;
     setStatus($("#sx-priv-status"), "Guardando…", "info");
     var nombre = $("#sx-reg-name").value.trim(), artista = $("#sx-reg-artist").value.trim(), rut = $("#sx-rut").value.trim(), tel = $("#sx-tel").value.trim();
+    if (rut && !rutValido(rut)) { setStatus($("#sx-priv-status"), "El RUT no es válido: revisa el dígito verificador.", "err"); return; }
+    rut = rut ? formatRut(rut) : "";
     var H2 = { apikey: cfg.anonKey, Authorization: "Bearer " + session.token, "Content-Type": "application/json" };
     try {
       // Nombre completo → padrón (ime_socios)
@@ -362,7 +379,13 @@
       await rest("/rest/v1/ime_socios_perfil?on_conflict=id", { method: "POST", headers: Object.assign({ Prefer: "resolution=merge-duplicates" }, H2), body: JSON.stringify([{ id: session.userId, artist_name: artista || null, updated_at: new Date().toISOString() }]) });
       if ($("#sx-artist")) $("#sx-artist").value = artista;
       // RUT / teléfono → privado (ime_socios_privado)
-      await rest("/rest/v1/ime_socios_privado?on_conflict=id", { method: "POST", headers: Object.assign({ Prefer: "resolution=merge-duplicates" }, H2), body: JSON.stringify([{ id: session.userId, rut: rut || null, telefono: tel || null, updated_at: new Date().toISOString() }]) });
+      var rp = await rest("/rest/v1/ime_socios_privado?on_conflict=id", { method: "POST", headers: Object.assign({ Prefer: "resolution=merge-duplicates" }, H2), body: JSON.stringify([{ id: session.userId, rut: rut || null, telefono: tel || null, updated_at: new Date().toISOString() }]) });
+      if (!rp.ok) {
+        var det = {}; try { det = await rp.json(); } catch (e2) {}
+        if (String(det.code || "") === "23505" || /duplicate|unique/i.test(det.message || "")) { setStatus($("#sx-priv-status"), "Ese RUT ya está registrado por otra persona. Avisa al directorio.", "err"); return; }
+        setStatus($("#sx-priv-status"), "No se pudieron guardar RUT/teléfono.", "err"); return;
+      }
+      if (rut) $("#sx-rut").value = rut;
       setStatus($("#sx-priv-status"), "Datos guardados.", "ok");
     } catch (e) { setStatus($("#sx-priv-status"), "Error al guardar.", "err"); }
   });

@@ -339,14 +339,21 @@
   if ($("#sx-priv-save")) $("#sx-priv-save").addEventListener("click", async function () {
     if (!session) return;
     setStatus($("#sx-priv-status"), "Guardando…", "info");
+    var nombre = $("#sx-reg-name").value.trim(), artista = $("#sx-reg-artist").value.trim(), rut = $("#sx-rut").value.trim(), tel = $("#sx-tel").value.trim();
+    var H2 = { apikey: cfg.anonKey, Authorization: "Bearer " + session.token, "Content-Type": "application/json" };
     try {
-      var body = [{ id: session.userId, rut: $("#sx-rut").value.trim() || null, telefono: $("#sx-tel").value.trim() || null, updated_at: new Date().toISOString() }];
-      var res = await rest("/rest/v1/ime_socios_privado?on_conflict=id", {
-        method: "POST",
-        headers: { apikey: cfg.anonKey, Authorization: "Bearer " + session.token, "Content-Type": "application/json", Prefer: "resolution=merge-duplicates" },
-        body: JSON.stringify(body)
-      });
-      setStatus($("#sx-priv-status"), res.ok ? "Datos guardados." : "No se pudo guardar.", res.ok ? "ok" : "err");
+      // Nombre completo → padrón (ime_socios)
+      if (nombre) {
+        await rest("/rest/v1/ime_socios?id=eq." + session.userId, { method: "PATCH", headers: Object.assign({ Prefer: "return=minimal" }, H2), body: JSON.stringify({ full_name: nombre }) });
+        session.name = nombre; $("#sx-who").textContent = nombre;
+        var st = window.IMEAuth && IMEAuth.load(); if (st) { st.name = nombre; IMEAuth.save(st); }
+      }
+      // Nombre artístico → perfil (ime_socios_perfil)
+      await rest("/rest/v1/ime_socios_perfil?on_conflict=id", { method: "POST", headers: Object.assign({ Prefer: "resolution=merge-duplicates" }, H2), body: JSON.stringify([{ id: session.userId, artist_name: artista || null, updated_at: new Date().toISOString() }]) });
+      if ($("#sx-artist")) $("#sx-artist").value = artista;
+      // RUT / teléfono → privado (ime_socios_privado)
+      await rest("/rest/v1/ime_socios_privado?on_conflict=id", { method: "POST", headers: Object.assign({ Prefer: "resolution=merge-duplicates" }, H2), body: JSON.stringify([{ id: session.userId, rut: rut || null, telefono: tel || null, updated_at: new Date().toISOString() }]) });
+      setStatus($("#sx-priv-status"), "Datos guardados.", "ok");
     } catch (e) { setStatus($("#sx-priv-status"), "Error al guardar.", "err"); }
   });
 
@@ -391,12 +398,23 @@
     var tp = document.querySelector("#sx-toggle-pub");
     var tv = document.querySelector("#sx-toggle-priv");
     if (!grid || !tp || !tv) return;
+    var first = true;
+    function animate(v) {
+      var sel = v === "pub" ? ".sx-col-pub .sx-card" : v === "priv" ? ".sx-col-priv .sx-card" : ".sx-card";
+      grid.querySelectorAll(sel).forEach(function (c, i) {
+        c.classList.remove("sx-anim"); void c.offsetWidth;
+        c.style.animationDelay = (i * 0.09) + "s";
+        c.classList.add("sx-anim");
+      });
+    }
     function setView(v) {
       grid.setAttribute("data-view", v);
       tp.textContent = v === "pub" ? "◀" : "▶";
       tp.title = v === "pub" ? "Volver a dos columnas" : "Ver a pantalla completa (como público)";
       tv.textContent = v === "priv" ? "▶" : "◀";
       tv.title = v === "priv" ? "Volver a dos columnas" : "Ver tu perfil de socix a pantalla completa";
+      if (!first) animate(v);
+      first = false;
     }
     tp.addEventListener("click", function () { setView(grid.getAttribute("data-view") === "pub" ? "both" : "pub"); });
     tv.addEventListener("click", function () { setView(grid.getAttribute("data-view") === "priv" ? "both" : "priv"); });

@@ -8,7 +8,7 @@
   var cfg = window.IME_SUPABASE || {};
   var $ = function (s) { return document.querySelector(s); };
   var session = null;               // { token, userId, email, name, role }
-  var SOCIXS = [], CUOTAS = [], COMPS = [], byId = {};
+  var SOCIXS = [], CUOTAS = [], COMPS = [], byId = {}, PRIV = {};
 
   try { if (window.IMESkin && $("#ime-skin")) window.IMESkin.mount({ canvas: "#ime-skin", appKey: (cfg.appKey || "ime-conecta") }); } catch (e) {}
 
@@ -79,9 +79,11 @@
       var rs = await Promise.all([
         rest("/rest/v1/ime_socios?select=id,email,full_name,active&order=full_name.asc"),
         rest("/rest/v1/ime_cuotas?select=*"),
-        rest("/rest/v1/ime_comprobantes?select=*&order=created_at.desc")
+        rest("/rest/v1/ime_comprobantes?select=*&order=created_at.desc"),
+        rest("/rest/v1/ime_socios_privado?select=id,tipo,rut")
       ]);
       SOCIXS = await rs[0].json(); CUOTAS = await rs[1].json(); COMPS = await rs[2].json();
+      try { var pr = await rs[3].json(); PRIV = {}; if (Array.isArray(pr)) pr.forEach(function (x) { PRIV[x.id] = x; }); } catch (e) { PRIV = {}; }
       if (!Array.isArray(SOCIXS)) SOCIXS = []; if (!Array.isArray(CUOTAS)) CUOTAS = []; if (!Array.isArray(COMPS)) COMPS = [];
       byId = {}; SOCIXS.forEach(function (s) { byId[s.id] = s; });
       renderKpis(); renderSocixs(); renderComps(); fillSocioSelect();
@@ -96,8 +98,15 @@
     var pendiente = CUOTAS.filter(function (c) { return c.estado === "pendiente"; }).reduce(function (a, c) { return a + (c.monto || 0); }, 0);
     var recaudado = COMPS.filter(function (c) { return c.estado === "verificado"; }).reduce(function (a, c) { return a + (c.monto || 0); }, 0);
     var porVerificar = COMPS.filter(function (c) { return c.estado === "enviado"; }).length;
+    var nat = 0, jur = 0, sinRut = 0;
+    SOCIXS.forEach(function (s2) {
+      var p = PRIV[s2.id];
+      if (!p || !p.rut) { sinRut++; return; }
+      if ((p.tipo || "natural") === "juridica") jur++; else nat++;
+    });
     var k = [
-      ["Socixs", SOCIXS.length], ["Activxs", activxs], ["Con deuda", conDeuda],
+      ["Socixs", SOCIXS.length], ["Activxs", activxs], ["Persona natural", nat], ["Personalidad jurídica", jur],
+      ["Sin RUT", sinRut], ["Con deuda", conDeuda],
       ["Pendiente", CLP(pendiente)], ["Recaudado", CLP(recaudado)], ["Comprob. por verificar", porVerificar]
     ];
     $("#pn-kpis").innerHTML = k.map(function (x) { return '<div class="pn-kpi"><b>' + esc(x[1]) + "</b><span>" + esc(x[0]) + "</span></div>"; }).join("");

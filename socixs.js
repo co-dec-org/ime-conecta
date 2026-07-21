@@ -344,6 +344,11 @@
       var p = (Array.isArray(rows) && rows[0]) || {};
       if ($("#sx-rut")) $("#sx-rut").value = p.rut || "";
       if ($("#sx-tel")) $("#sx-tel").value = p.telefono || "";
+      aplicarTipo(p.tipo || tipoDesdeRut(p.rut) || "natural");
+      if ($("#sx-razon")) $("#sx-razon").value = p.razon_social || "";
+      if ($("#sx-giro")) $("#sx-giro").value = p.giro || "";
+      if ($("#sx-rep-nombre")) $("#sx-rep-nombre").value = p.rep_legal_nombre || "";
+      if ($("#sx-rep-rut")) $("#sx-rep-rut").value = p.rep_legal_rut || "";
     } catch (e) { /* silencioso */ }
   }
   // ---------- RUT: dato madre del padrón (normaliza, formatea y valida módulo 11) ----------
@@ -361,12 +366,29 @@
     return dv === dvCalc;
   }
 
+  // Clasificación pilar: en Chile los RUT >= 50.000.000 son personalidad jurídica.
+  function tipoDesdeRut(v) {
+    var r = normRut(v); if (r.length < 8) return null;
+    var num = parseInt(r.slice(0, -1), 10);
+    return isNaN(num) ? null : (num >= 50000000 ? "juridica" : "natural");
+  }
+  function aplicarTipo(t) {
+    var sel = $("#sx-tipo"), box = $("#sx-juridica");
+    if (sel && t) sel.value = t;
+    if (box) box.hidden = (sel ? sel.value : t) !== "juridica";
+  }
+  if ($("#sx-rut")) $("#sx-rut").addEventListener("input", function () { var t = tipoDesdeRut(this.value); if (t) aplicarTipo(t); });
+  if ($("#sx-tipo")) $("#sx-tipo").addEventListener("change", function () { aplicarTipo(this.value); });
+
   if ($("#sx-priv-save")) $("#sx-priv-save").addEventListener("click", async function () {
     if (!session) return;
     setStatus($("#sx-priv-status"), "Guardando…", "info");
     var nombre = $("#sx-reg-name").value.trim(), artista = $("#sx-reg-artist").value.trim(), rut = $("#sx-rut").value.trim(), tel = $("#sx-tel").value.trim();
     if (rut && !rutValido(rut)) { setStatus($("#sx-priv-status"), "El RUT no es válido: revisa el dígito verificador.", "err"); return; }
     rut = rut ? formatRut(rut) : "";
+    var tipo = $("#sx-tipo") ? $("#sx-tipo").value : "natural";
+    var repRut = $("#sx-rep-rut") ? $("#sx-rep-rut").value.trim() : "";
+    if (tipo === "juridica" && repRut && !rutValido(repRut)) { setStatus($("#sx-priv-status"), "El RUT del representante legal no es válido.", "err"); return; }
     var H2 = { apikey: cfg.anonKey, Authorization: "Bearer " + session.token, "Content-Type": "application/json" };
     try {
       // Nombre completo → padrón (ime_socios)
@@ -379,7 +401,7 @@
       await rest("/rest/v1/ime_socios_perfil?on_conflict=id", { method: "POST", headers: Object.assign({ Prefer: "resolution=merge-duplicates" }, H2), body: JSON.stringify([{ id: session.userId, artist_name: artista || null, updated_at: new Date().toISOString() }]) });
       if ($("#sx-artist")) $("#sx-artist").value = artista;
       // RUT / teléfono → privado (ime_socios_privado)
-      var rp = await rest("/rest/v1/ime_socios_privado?on_conflict=id", { method: "POST", headers: Object.assign({ Prefer: "resolution=merge-duplicates" }, H2), body: JSON.stringify([{ id: session.userId, rut: rut || null, telefono: tel || null, updated_at: new Date().toISOString() }]) });
+      var rp = await rest("/rest/v1/ime_socios_privado?on_conflict=id", { method: "POST", headers: Object.assign({ Prefer: "resolution=merge-duplicates" }, H2), body: JSON.stringify([{ id: session.userId, rut: rut || null, telefono: tel || null, tipo: tipo, razon_social: tipo === "juridica" ? ($("#sx-razon").value.trim() || null) : null, giro: tipo === "juridica" ? ($("#sx-giro").value.trim() || null) : null, rep_legal_nombre: tipo === "juridica" ? ($("#sx-rep-nombre").value.trim() || null) : null, rep_legal_rut: tipo === "juridica" && repRut ? formatRut(repRut) : null, updated_at: new Date().toISOString() }]) });
       if (!rp.ok) {
         var det = {}; try { det = await rp.json(); } catch (e2) {}
         if (String(det.code || "") === "23505" || /duplicate|unique/i.test(det.message || "")) { setStatus($("#sx-priv-status"), "Ese RUT ya está registrado por otra persona. Avisa al directorio.", "err"); return; }

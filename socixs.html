@@ -175,6 +175,18 @@
             <label class="sx-field"><span>Nombre artístico</span><input id="sx-reg-artist" class="sx-in" type="text" placeholder="Tu nombre de artista" autocomplete="off" /></label>
             <label class="sx-field"><span>Correo · no editable</span><input id="sx-reg-email" class="sx-in" type="email" readonly /></label>
             <label class="sx-field"><span>RUT · identifica tu membresía</span><input id="sx-rut" class="sx-in" type="text" placeholder="12.345.678-9" autocomplete="off" /></label>
+            <label class="sx-field"><span>Tipo de socix · se deduce del RUT</span>
+              <select id="sx-tipo" class="sx-sel">
+                <option value="natural">Socix Persona Natural</option>
+                <option value="juridica">Socix Personalidad Jurídica</option>
+              </select>
+            </label>
+            <div id="sx-juridica" hidden>
+              <label class="sx-field"><span>Razón social</span><input id="sx-razon" class="sx-in" type="text" placeholder="Nombre legal de la entidad" autocomplete="off" /></label>
+              <label class="sx-field"><span>Giro</span><input id="sx-giro" class="sx-in" type="text" placeholder="Giro comercial" autocomplete="off" /></label>
+              <label class="sx-field"><span>Representante legal</span><input id="sx-rep-nombre" class="sx-in" type="text" placeholder="Nombre completo" autocomplete="off" /></label>
+              <label class="sx-field"><span>RUT del representante</span><input id="sx-rep-rut" class="sx-in" type="text" placeholder="12.345.678-5" autocomplete="off" /></label>
+            </div>
             <label class="sx-field"><span>Teléfono</span><input id="sx-tel" class="sx-in" type="tel" placeholder="+56 9 …" autocomplete="off" /></label>
             <div class="sx-row" style="margin-top:6px"><button id="sx-priv-save" class="sx-btn">Guardar</button><span id="sx-priv-status" class="sx-status"></span></div>
             <p class="sx-hint">El RUT identifica tu membresía en el padrón: es único por persona y se valida al guardar. El correo no se puede cambiar (es tu acceso).</p>

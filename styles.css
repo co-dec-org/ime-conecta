@@ -110,13 +110,14 @@ a { color: var(--accent); }
 .brand-name strong { color: var(--accent); }
 .header-actions { display: flex; gap: 8px; }
 .hbtn {
-  background: transparent; color: var(--text); border: 1px solid var(--line);
-  padding: 7px 14px; border-radius: 999px; font-size: 13px; cursor: pointer;
-  transition: background .15s, border-color .15s;
+  background: linear-gradient(120deg, #c084fc, #e879f9); color: #2a0a3a; border: 1px solid transparent;
+  padding: 8px 16px; border-radius: 999px; font-size: 13px; font-weight: 600; cursor: pointer; text-decoration: none;
+  display: inline-flex; align-items: center;
+  transition: filter .15s, box-shadow .15s;
 }
-.hbtn:hover, .hbtn[aria-expanded="true"], .hbtn[aria-pressed="true"] {
-  background: color-mix(in srgb, var(--accent) 18%, transparent);
-  border-color: var(--accent);
+.hbtn:hover { filter: brightness(1.08); }
+.hbtn[aria-expanded="true"], .hbtn[aria-pressed="true"] {
+  filter: brightness(1.06); box-shadow: 0 0 0 2px color-mix(in srgb, #c084fc 55%, transparent);
 }
 
 /* Índice lateral */

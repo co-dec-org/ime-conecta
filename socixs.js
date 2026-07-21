@@ -90,6 +90,7 @@
         session.role = session.isDirector ? (drows[0].role || null) : null;
       } catch (e) { session.isDirector = false; }
       if (window.IMEAuth) IMEAuth.save({ token: session.token, userId: session.userId, email: session.email, name: session.name, role: session.role, mustChange: session.mustChange, exp: Date.now() + ((data.expires_in || 3600) * 1000) });
+      window.dispatchEvent(new CustomEvent("ime:auth", { detail: { email: session.email, role: session.role, token: session.token, userId: session.userId } }));
       enterApp();
     } catch (e) { setStatus($("#sx-login-status"), "Error de conexión con Supabase.", "err"); }
   });
@@ -124,6 +125,7 @@
   $("#sx-signout").addEventListener("click", function () {
     session = null;
     if (window.IMEAuth) IMEAuth.clear();
+    window.dispatchEvent(new CustomEvent("ime:auth", { detail: { email: null } }));
     setLoggedUI(false);
     $("#sx-pass").value = "";
   });
@@ -365,38 +367,10 @@
     } catch (e) { setStatus($("#sx-priv-status"), "Error al guardar.", "err"); }
   });
 
-  // ---------- notas del área de socix (panel propio, misma base) ----------
-  var noteToggle = $("#sx-notes-toggle"), notePanel = $("#sx-notes");
-  var NOTE_SECTION = "socixs";
-  function openNotes(open) {
-    if (!notePanel) return;
-    notePanel.hidden = !open;
-    if (noteToggle) noteToggle.setAttribute("aria-expanded", String(open));
-    if (open) loadNote();
-  }
-  if (noteToggle) noteToggle.addEventListener("click", function () { openNotes(notePanel.hidden); });
-  if ($("#sx-notes-close")) $("#sx-notes-close").addEventListener("click", function () { openNotes(false); });
-  if ($("#sx-note-clear")) $("#sx-note-clear").addEventListener("click", function () { $("#sx-note-text").value = ""; setStatus($("#sx-note-status"), "", ""); });
-  async function loadNote() {
-    if (!session) { setStatus($("#sx-note-status"), "Inicia sesión para dejar tu nota.", "info"); return; }
-    try {
-      var r = await rest("/rest/v1/ime_section_notes?app_key=eq." + encodeURIComponent(cfg.appKey) + "&section_id=eq." + NOTE_SECTION + "&user_id=eq." + session.userId + "&select=note_text");
-      var rows = await r.json();
-      $("#sx-note-text").value = (Array.isArray(rows) && rows[0] && rows[0].note_text) || "";
-    } catch (e) { /* silencioso */ }
-  }
-  if ($("#sx-note-send")) $("#sx-note-send").addEventListener("click", async function () {
-    if (!session) { setStatus($("#sx-note-status"), "Inicia sesión para dejar tu nota.", "err"); return; }
-    setStatus($("#sx-note-status"), "Enviando…", "info");
-    try {
-      var body = [{ app_key: cfg.appKey, section_id: NOTE_SECTION, user_id: session.userId, note_text: $("#sx-note-text").value.trim(), author_email: session.email, author_name: session.name, updated_at: new Date().toISOString() }];
-      var res = await rest("/rest/v1/ime_section_notes?on_conflict=app_key,section_id,user_id", {
-        method: "POST",
-        headers: { apikey: cfg.anonKey, Authorization: "Bearer " + session.token, "Content-Type": "application/json", Prefer: "resolution=merge-duplicates" },
-        body: JSON.stringify(body)
-      });
-      setStatus($("#sx-note-status"), res.ok ? "Nota enviada." : "No se pudo enviar.", res.ok ? "ok" : "err");
-    } catch (e) { setStatus($("#sx-note-status"), "Error al enviar.", "err"); }
+  // ---------- Notas: módulo compartido, idéntico al de Conecta ----------
+  if (window.IMENotes) IMENotes.mount({
+    getSectionId: function () { return "socixs"; },
+    getSectionName: function () { return "Área de socixs"; }
   });
 
   // Botones triangulares: expandir una columna a pantalla completa.

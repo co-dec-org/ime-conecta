@@ -62,12 +62,14 @@
       if (!res.ok) { setStatus($("#pn-login-status"), "No se pudo iniciar sesión.", "err"); return; }
       session = { token: data.access_token, userId: data.user.id, email: email };
       if (window.IMEAuth) IMEAuth.save({ token: session.token, userId: session.userId, email: session.email, name: session.name, exp: Date.now() + ((data.expires_in || 3600) * 1000) });
+      window.dispatchEvent(new CustomEvent("ime:auth", { detail: { email: session.email, token: session.token, userId: session.userId } }));
       gate();
     } catch (e) { setStatus($("#pn-login-status"), "Error de conexión.", "err"); }
   });
 
   $("#pn-signout").addEventListener("click", function () {
     session = null; if (window.IMEAuth) IMEAuth.clear();
+    window.dispatchEvent(new CustomEvent("ime:auth", { detail: { email: null } }));
     $("#pn-app").hidden = true; $("#pn-deny").hidden = true; $("#pn-login").hidden = false; $("#pn-signout").hidden = true; $("#pn-pass").value = "";
   });
 
@@ -165,6 +167,12 @@
       setStatus($("#pn-cuota-status"), "Cuota creada (" + rows.length + ").", "ok");
       loadData();
     } catch (e) { setStatus($("#pn-cuota-status"), "Error al crear.", "err"); }
+  });
+
+  // ---------- Notas: módulo compartido, idéntico al de Conecta ----------
+  if (window.IMENotes) IMENotes.mount({
+    getSectionId: function () { return "panel"; },
+    getSectionName: function () { return "Panel directorio"; }
   });
 
   // ---------- restaurar sesión ----------
